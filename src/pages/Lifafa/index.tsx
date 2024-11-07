@@ -5,7 +5,7 @@ import { Box, Flex } from "@radix-ui/themes";
 import { LifafaFE, SharedUserFE } from "../../types/documentFETypes";
 import LifafaListDrawer from "../../components/Drawers/Lifafa";
 import CreateRatnaInput from "../../components/CreateRatna";
-import { LifafaContextDataType, useLifafaDispatch } from "../../store/lifafas/context";
+import { LifafaContextDataType, useGetLifafaFromPath, useLifafaDispatch } from "../../store/lifafas/context";
 import { LifafaActionFactory } from "../../store/lifafas/actionCreator";
 import { LifafaAccessScreen, LifafaAccessType, pageStatus } from "../../constant";
 import { fetchLifafa } from "../../api/api";
@@ -33,11 +33,11 @@ export default function LifafaPage({lifafaContext}: {lifafaContext?: LifafaConte
         uid
     } = user.user;
 
-    useEffect(() => {
-        if (lifafaId && lifafaContext?.data[lifafaId] && lifafaContext?.data[lifafaId]?.lifafa) {
-            handleLifafaScreen(lifafaContext?.data[lifafaId]?.lifafa, lifafaContext?.data[lifafaId].userAccess?.[uid], uid);
-        }
-    }, [lifafaContext]);
+    // useEffect(() => {
+    //     if (lifafaId && lifafaContext?.data[lifafaId] && lifafaContext?.data[lifafaId]?.lifafa) {
+    //         handleLifafaScreen(lifafaContext?.data[lifafaId]?.lifafa, lifafaContext?.data[lifafaId].userAccess?.[uid], uid);
+    //     }
+    // }, [lifafaContext]);
 
 
     function handleLifafaScreen(lifafa: LifafaFE, access: SharedUserFE, uid: string) {
@@ -58,11 +58,13 @@ export default function LifafaPage({lifafaContext}: {lifafaContext?: LifafaConte
     }
 
     useEffect(() => {
+        console.log('lifafa context is', lifafaContext)
         if (!lifafaId || !uid || !lifafaContext) return;
         const {
             data: lifafaData
         } = lifafaContext;
-        if (!isLoading && lifafaId && (!lifafaData || !lifafaData[lifafaId]?.lifafa?.id || !lifafaData[lifafaId]?.userAccess?.[uid]?.id)) {
+        console.log('lifafa context is', lifafaData, lifafaData[lifafaId]?.lifafa?.id, lifafaData[lifafaId]?.userAccess?.[uid]?.id)
+        if (lifafaId && (!lifafaData || !lifafaData[lifafaId]?.lifafa?.id || !lifafaData[lifafaId]?.userAccess?.[uid]?.id)) {
             fetchLifafa(lifafaId, uid).then(response => {
                 if (response) {
                     const {

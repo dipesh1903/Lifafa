@@ -10,6 +10,7 @@ React.ElementRef<typeof DropdownMenuPrimitive.Trigger>,
 React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Trigger>
 >(({ className, ...props }, ref) => (
         <DropdownMenuPrimitive.Trigger
+        onClick={event => event.stopPropagation()}
         ref={ref}
         className={cn("w-fit h-fit p-1 hover:cursor-pointer rounded-sm focus:outline-none", className)}
         {...props}
