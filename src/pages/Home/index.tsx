@@ -22,12 +22,7 @@ export default function HomePage() {
     return (
         <Flex className="max-w-2xl min-h-dvh m-auto" ref={ref}>
             <SideBar/>
-            <Flex direction="column" className="w-full min-h-[100vh] ml-[60px]">
-                <Flex justify="between" align="center" className="w-full bg-light-surfaceContainer">
-                    <HeaderHome/>
-                </Flex>
-                <Outlet/>
-            </Flex>
+            <Outlet/>
         </Flex>
     )
 }

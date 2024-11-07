@@ -2,12 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../store/auth/context";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Box, Flex } from "@radix-ui/themes";
-import useMobileLayout from "../../utils/hooks/useWindowDimension";
-import "./style.scss"
 import { LifafaFE, SharedUserFE } from "../../types/documentFETypes";
 import LifafaListDrawer from "../../components/Drawers/Lifafa";
 import CreateRatnaInput from "../../components/CreateRatna";
-import { LifafaContextDataType, MemoComp, useLifafaDispatch } from "../../store/lifafas/context";
+import { LifafaContextDataType, useLifafaDispatch } from "../../store/lifafas/context";
 import { LifafaActionFactory } from "../../store/lifafas/actionCreator";
 import { LifafaAccessScreen, LifafaAccessType, pageStatus } from "../../constant";
 import { fetchLifafa } from "../../api/api";
@@ -16,16 +14,15 @@ import LifafaLocked from "../../components/lifafa-lock";
 import LifafaJoin from "../../components/lifafa-join";
 import RatnaList from "../../components/Ratna/ratna-list";
 import Loader from "../../components/ui/loader";
+import HeaderHome from "../../components/Headers/headerHome";
 
 export default function LifafaPage({lifafaContext}: {lifafaContext?: LifafaContextDataType}) {
     const navigate = useNavigate();
     const user = useAuth();
-    const dimension = useMobileLayout();
     const ref = useRef(null);
     const location = useLocation();
     const { lifafaId }= useParams();
     const [openLifafaListDrawer , setOpenLifafaListDrawer] = useState(false);
-    const [drawerPos , setDrawerPos] = useState({left: 0 , width: 600});
     const dispatch = useLifafaDispatch();
     const [isLoading, setIsLoading] = useState<pageStatus>();
     const [screenType, setScreenType] = useState<LifafaAccessScreen>();
@@ -37,7 +34,6 @@ export default function LifafaPage({lifafaContext}: {lifafaContext?: LifafaConte
     } = user.user;
 
     useEffect(() => {
-        console.log('lifafa context is', lifafaContext);
         if (lifafaId && lifafaContext?.data[lifafaId] && lifafaContext?.data[lifafaId]?.lifafa) {
             handleLifafaScreen(lifafaContext?.data[lifafaId]?.lifafa, lifafaContext?.data[lifafaId].userAccess?.[uid], uid);
         }
@@ -97,31 +93,43 @@ export default function LifafaPage({lifafaContext}: {lifafaContext?: LifafaConte
     }, [location])
 
     return (
-        <Box ref={ref} className=" border-light-outlineVariant border-x-[0.5px] flex flex-1">
-            { !isLoading || isLoading === pageStatus.LOADING ? <Flex align="center" justify="center" flexGrow="1"><Loader /></Flex> : screenType === LifafaAccessScreen.SHOW_PASSWORD ? 
-            <LifafaLocked onSuccess={() => setScreenType(LifafaAccessScreen.SHOW_RATNAS)} lifafa={lifafa}/> : screenType === LifafaAccessScreen.SHOW_ADD_JOIN ? <LifafaJoin onSuccess={() => setScreenType(LifafaAccessScreen.SHOW_RATNAS)} lifafa={lifafa}/> : <>
-            <Flex className="max-w-2xl min-h-dvh flex-1">
-                <Box className="w-full min-h-[100vh]">
-                    <Box className="py-4 border-y-[1px] border-light-outlineVariant  px-4">
-                        {lifafaId && lifafaContext?.data[lifafaId]?.lifafa &&
-                        (!!isLifafaOwner(lifafaContext?.data[lifafaId]?.lifafa, uid) ||
-                        !!isUserHasProtectedAccess(lifafaContext?.data[lifafaId]?.lifafa, uid))  &&
-                            <CreateRatnaInput lifafaId={lifafaId || ''} /> }
-                    </Box>
-                    <Box className="bg-light-surface ">
-                        <MemoComp>
-                            <RatnaList lifafaId={lifafaId || ''}/>
-                        </MemoComp>
-                    </Box>
-                </Box>
-            </Flex>
-            {
-                openLifafaListDrawer ? 
-                <LifafaListDrawer open={openLifafaListDrawer} setOpen={setOpenLifafaListDrawer}/> : null
-            }
-            <Outlet/>
-            </>
-            }
-        </Box>
+            <Box ref={ref} className="flex flex-1">
+                { !isLoading || isLoading === pageStatus.LOADING ?
+                <Flex align="center" justify="center" flexGrow="1">
+                    <Loader />
+                </Flex> :
+                screenType === LifafaAccessScreen.SHOW_PASSWORD ? 
+                    <LifafaLocked 
+                    onSuccess={() => setScreenType(LifafaAccessScreen.SHOW_RATNAS)}
+                    lifafa={lifafa}/> :
+                        screenType === LifafaAccessScreen.SHOW_ADD_JOIN ?
+                            <LifafaJoin 
+                            onSuccess={() => setScreenType(LifafaAccessScreen.SHOW_RATNAS)} 
+                            lifafa={lifafa}/> :
+                <>
+                    <Flex direction="column" justify="between" align="center" className="w-full bg-light-surfaceContainer ml-[60px]">
+                        <HeaderHome lifafa={lifafaId && lifafaContext?.data[lifafaId]?.lifafa || {} as LifafaFE}/>
+                        <Flex className="max-w-2xl min-h-dvh flex-1 w-full border-x-[0.5px] border-light-outlineVariant">
+                            <Box className="w-full min-h-[100vh]">
+                                <Box className="py-4 border-y-[1px] border-light-outlineVariant  px-4">
+                                    {lifafaId && lifafaContext?.data[lifafaId]?.lifafa &&
+                                    (!!isLifafaOwner(lifafaContext?.data[lifafaId]?.lifafa, uid) ||
+                                    !!isUserHasProtectedAccess(lifafaContext?.data[lifafaId]?.lifafa, uid))  &&
+                                        <CreateRatnaInput lifafaId={lifafaId || ''} /> }
+                                </Box>
+                                <Box className="bg-light-surface ">
+                                    <RatnaList lifafaId={lifafaId || ''}/>
+                                </Box>
+                            </Box>
+                        </Flex>
+                        {
+                            openLifafaListDrawer ? 
+                            <LifafaListDrawer open={openLifafaListDrawer} setOpen={setOpenLifafaListDrawer}/> : null
+                        }
+                    <Outlet/>
+                    </Flex>
+                </>
+                }
+            </Box>
     )
 }

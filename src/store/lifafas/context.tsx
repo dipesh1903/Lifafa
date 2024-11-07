@@ -78,7 +78,6 @@ export function MemoComp(props: { children: any }) {
     const context = useGetLifafaFromPath();
 
     const ref = useRef<LifafaContextDataType>();
-    console.log('data here is context for', context, ref.current, count);
 
     useEffect(() => {
         if (!ref.current || !equal(ref.current.data, context.data)) {
@@ -86,7 +85,7 @@ export function MemoComp(props: { children: any }) {
             setCount((prev) => prev + 1);
         }
     }, [context])
-    console.log('the count is ', count)
+
     return useMemo(() => {
         const element = Children.map(props.children, (child) =>
             cloneElement(child, {
