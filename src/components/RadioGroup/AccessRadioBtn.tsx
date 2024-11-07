@@ -27,7 +27,7 @@ const AccessRadioGroup = forwardRef<
                 {
                     radioItems.map((item) => {
                         return (
-                            <div className="flex items-center">
+                            <div className="flex items-center" key={item.value}>
                                 <RadioGroupPrimitive.Item key={item.label} value={item.value} className="group cursor-default rounded-full bg-white outline-none hover:bg-violet-500/30 border-2">
                                     <div className="relative py-1 px-4 group-data-[state=checked]:text-black text-blue-300"><span>{item.label}</span>
                                     <RadioGroupPrimitive.Indicator className="absolute top-0 left-0 flex size-full items-center justify-center after:block after:size-full after:rounded-full after:bg-violet-500/30" />

@@ -1,4 +1,4 @@
-import { Button, Flex } from "@radix-ui/themes";
+import { Flex } from "@radix-ui/themes";
 import Label from "./ui/Label";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -16,10 +16,6 @@ import { useRatnaDispatch } from "../store/ratnas/context";
 import { RatnaActionFactory } from "../store/ratnas/actionCreator";
 import { useConfig } from "../store/config/context";
 import { PrimaryButton } from "./ui/Button";
-
-type props = {
-    ratna?: RatnaFE,
-}
 
 type formValues = {
     ratnaName: string,
@@ -110,9 +106,8 @@ function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string
 
 )}
 
-export default function EditRatna({ratna}: props) {
+export default function EditRatna() {
     const isDesktop = useMediaQuery('(min-width: 768px)')
-    console.log('isDesktop', isDesktop);
     const navigate = useNavigate();
     const {lifafaId} = useParams();
     const [open , setOpen] = useState<boolean>(true);
@@ -120,7 +115,6 @@ export default function EditRatna({ratna}: props) {
     const drawerPos = useConfig();
 
     function onDialogClose() {
-        console.log('the val is ')
         setOpen(false);
         setTimeout(() => {
             document.body.style.pointerEvents = "auto";
@@ -137,8 +131,7 @@ export default function EditRatna({ratna}: props) {
     } 
 
     if (!state.ratna || !lifafaId) return;
-    if(!isDesktop) {
-        console.log('is desktop version');
+    if(isDesktop) {
         return (
             <Dialog open={open} onOpenChange={onDialogClose}>
                 <DialogContent>
@@ -148,7 +141,6 @@ export default function EditRatna({ratna}: props) {
             </Dialog>
         )
     } else {
-        console.log('is desktop version');
         return (
             <Drawer open={open} onOpenChange={onDrawerClose}
             onAnimationEnd={() => {
@@ -156,7 +148,7 @@ export default function EditRatna({ratna}: props) {
                     document.body.style.pointerEvents = "auto";
                 }, 1000)}}>
                 <DrawerOverlay>
-                    <DrawerContent style={{left: `${(drawerPos).left}px`, width: `${(drawerPos).width}px` , boxShadow: 'rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px'}} className={cn("flex flex-col p-4 fixed bottom-0 m-auto left-[20px] h-[80%] bg-light-surface")}>
+                    <DrawerContent style={{left: `${(drawerPos).left}px`, width: `${(drawerPos).width}px` , boxShadow: 'rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px'}} className={cn("flex flex-col p-4 fixed bottom-0 m-auto left-[20px] h-[80%")}>
                         <RatnaForm ratna={state.ratna} lifafaId={lifafaId} onClose={onDrawerClose}/>
                     </DrawerContent>
                 </DrawerOverlay>

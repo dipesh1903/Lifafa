@@ -7,7 +7,7 @@ const PrimaryButton = forwardRef<ElementRef<typeof Button>, ButtonProps>(({class
     <Button 
         ref={ref}
         {...props}
-        className={cn(className, "justify-self-center group-invalid:pointer-events-none group-invalid:opacity-30 group-invalid:cursor-none focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center  bg-light-primary text-light-onPrimary")}>
+        className={cn("justify-self-center group-invalid:pointer-events-none group-invalid:opacity-30 group-invalid:cursor-none focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center  bg-light-primary text-light-onPrimary", className)}>
         {props.children}
     </Button>
 ))

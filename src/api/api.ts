@@ -89,6 +89,7 @@ export async function createLifafa(lifafa: LifafaDoc, uid: string, password?: st
         const batch = writeBatch(db);
         const lifafaId = new IdGenerator().generate();
         const addRef = doc(db, COLLECTIONS.LIFAFA.index, lifafaId);
+        console.log(lifafaId, lifafa);
         batch.set(addRef, {
             ...lifafa
         } as LifafaDoc);

@@ -1,10 +1,11 @@
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
-import { Pencil1Icon } from "@radix-ui/react-icons";
+
+import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import { SyntheticEvent } from "react";
 import { RatnaFE } from "../../../types/documentFETypes";
 import { deleteRatna } from "../../../api/ratna";
 import { useRatnaDispatch } from "../../../store/ratnas/context";
 import { RatnaActionFactory } from "../../../store/ratnas/actionCreator";
+import { DropdownMenuItem } from "../../ui/Dropdown-menu";
 
 type props = {
     ratna: RatnaFE,
@@ -21,7 +22,7 @@ export default function DeleteRatna({ratna, lifafaId}: props) {
     }
     return (
         <DropdownMenuItem onClick={(e: SyntheticEvent) => {deleteRatnas(e)}}>
-            <Pencil1Icon /> delete
+            <TrashIcon className="pr-2 size-6"/> delete
         </DropdownMenuItem>
     )
 }

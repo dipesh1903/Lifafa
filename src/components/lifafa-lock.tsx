@@ -40,7 +40,7 @@ export default function LifafaLocked({lifafa, onSuccess}: props) {
     }
     return (
         <Flex flexGrow="1" justify="center">
-            <Flex direction="column" align="center" justify="center">
+            <Flex direction="column" align="center" justify="center" flexGrow="1">
                 <LockClosedIcon height="100" width="100"/>
                 <form className="group" onSubmit={handleSubmit(onSubmit)}>
                     <div>

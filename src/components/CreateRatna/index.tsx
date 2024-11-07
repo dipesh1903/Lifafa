@@ -7,6 +7,8 @@ import { useRef } from "react";
 import { Timestamp } from "firebase/firestore";
 import { useRatnaDispatch } from "../../store/ratnas/context";
 import { RatnaActionFactory } from "../../store/ratnas/actionCreator";
+import { PrimaryButton } from "../ui/Button";
+import { Textarea } from "../ui/textarea";
 
 type props = {
     lifafaId: string,
@@ -38,15 +40,15 @@ export default function CreateRatnaInput({lifafaId , setRatna}: props) {
 
     return (
         <Flex direction="column" gap="2">
-            <textarea ref={inputRef}  className="appearance-none focus:outline-none w-full h-30 p-4 resize-none" placeholder="Add your ratna">
-            </textarea>
-            <Flex justify="between" align="center">
-                <IconButton variant="ghost">
+            <Textarea autoFocus ref={inputRef}  className="light-secondaryappearance-none focus:outline-none w-full h-30 p-4 resize-none bg-white " placeholder="Add your ratna">
+            </Textarea>
+            <Flex justify="end" align="center">
+                {/* <IconButton variant="ghost">
                     <IdCardIcon width="22"/>
-                </IconButton>
-                <Button variant="outline" className="px-2" onClick={createRatna}>
+                </IconButton> */}
+                <PrimaryButton className="px-2 pt-2 w-[20%]" onClick={createRatna}>
                     Add
-                </Button>
+                </PrimaryButton>
             </Flex>
         </Flex>
     )

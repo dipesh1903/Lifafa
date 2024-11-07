@@ -16,16 +16,17 @@ export default function LifafaHomeContent() {
     const result = Object.values(lifafas.data || {});
 
     useEffect(() => {
-        console.log('dispatcher' , typeof LifafaActionFactory.fetchAllLifafa(user.user.uid));
         dispatch(LifafaActionFactory.fetchAllLifafa(user.user.uid));
     },[user.user.uid])
     return (
         <>
-            <Box className="py-4 border-y-[1px] border-slate-100 px-4">
+            <Box className="border-y-[0.5px] mt-2 bg-light-surface border-light-outlineVariant">
                 {
                     result.map(item => {
                         return (
-                            <Box className="px-10 py-4 my-4" key={item.lifafa.id} onClick={() => navigate(`/lifafa/${item.lifafa.id}`)}>
+                            <Box className="px-10 py-4 border-b-[0.5px] border-light-outlineVariant hover:bg-light-surfaceDim hover:cursor-pointer"
+                            key={item.lifafa.id}
+                            onClick={() => navigate(`/lifafa/${item.lifafa.id}`)}>
                                 <LifafaCard 
                                 lifafa={item.lifafa}/>
                             </Box>

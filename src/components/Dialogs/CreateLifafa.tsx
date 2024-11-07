@@ -1,10 +1,9 @@
 import { Dialog, DialogContent } from "../ui/Dialog";
-import { Box, Button, Flex, Heading } from "@radix-ui/themes";
+import { Box, Flex } from "@radix-ui/themes";
 import AccessRadioGroup from "../RadioGroup/AccessRadioBtn";
 import { LifafaAccessType } from "../../constant";
-import { useEffect, useRef, useState } from "react";
-import { DialogClose } from "@radix-ui/react-dialog";
-import { Controller, FieldValues, SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { FieldValues, SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createLifafa, getLifafaPassword, updateLifafa } from "../../api/api";
@@ -13,12 +12,6 @@ import { Timestamp } from "firebase/firestore";
 import Label from "../ui/Label";
 import { Input } from "../ui/input";
 import { PrimaryButton } from "../ui/Button";
-
-type props = {
-    open: boolean,
-    setOpen: (val: boolean) => void,
-    onCreates: (name: string, access: LifafaAccessType, password?: string) => void
-}
 
 type formValues = {
     lifafaName: string
@@ -29,7 +22,7 @@ export default function CreateLifafaDialog() {
     const navigate = useNavigate();
     const location = useLocation();
     const { lifafaId }= useParams();
-    console.log('location state is', location.state);
+    const [access , setAccess] = useState(LifafaAccessType.PRIVATE)
     const radioItems = Object.keys(LifafaAccessType).map(value => ({label: value, value}));
     const { register, handleSubmit, formState: { errors }, setValue } = useForm<formValues>({
         defaultValues: {
@@ -38,7 +31,6 @@ export default function CreateLifafaDialog() {
         }
     });
     const user = useAuth();
-    const [access , setAccess] = useState(LifafaAccessType.PRIVATE)
 
     const onSubmit: SubmitHandler<formValues> = (data: FieldValues) => {
         if (lifafaId) {
@@ -53,7 +45,9 @@ export default function CreateLifafaDialog() {
     }
 
     useEffect(() => {
-        setAccess(location.state?.accessType)
+        if (location.state?.accessType) {
+            setAccess(location.state?.accessType)
+        }
         if (location.state?.accessType === LifafaAccessType.PROTECTED && lifafaId) {
             getLifafaPassword(lifafaId, user.user.uid).then(val => {
                 setValue('protectedPassword', val);

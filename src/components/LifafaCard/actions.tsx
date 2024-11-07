@@ -15,8 +15,12 @@ export default function LifafaCardActions({lifafa}: props) {
     }
     return (
         <Flex gap="3" wrap="nowrap" className="overflow-auto overflow-y-scroll scrollbar-w py-4">
-            <Button variant="outline" onClick={(e) => {e.stopPropagation(); copyToClipboard()}}>Copy Invite Link</Button>
-            {!!isLifafaOwner(lifafa, user.user.uid) && <Button variant="outline" onClick={(e) => {e.stopPropagation(); navigate(`/lifafa/${lifafa.id}/edit`, {state: {lifafaName: lifafa.name, accessType: lifafa.accessType}})}}>Edit</Button>}
+            <Button 
+            variant="outline"
+            className="bg-light-secondary text-light-onSecondary border-light-outline hover:bg-opacity-80"
+            onClick={(e) => {e.stopPropagation(); copyToClipboard()}}>Copy Invite Link</Button>
+            {!!isLifafaOwner(lifafa, user.user.uid) &&
+            <Button variant="outline" className="bg-light-secondary  border-light-outline text-light-onSecondary hover:bg-opacity-80" onClick={(e) => {e.stopPropagation(); navigate(`/lifafa/${lifafa.id}/edit`, {state: {lifafaName: lifafa.name, accessType: lifafa.accessType}})}}>Edit</Button>}
         </Flex>
     )
 }

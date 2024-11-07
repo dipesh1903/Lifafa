@@ -3,10 +3,10 @@ import { RatnaFE, SharedUserFE } from "../../../types/documentFETypes";
 import CardInfo from "./cardInfo";
 import RatnaMenuComponent from "../../DropdownMenus/ratna-menu";
 import { ReactNode, SyntheticEvent } from "react";
-import { isRatnaCreator } from "../../../utils";
+import { isRatnaCreator, isValidUrl } from "../../../utils";
 import { useAuth } from "../../../store/auth/context";
 import { DropdownMenuItem } from "../../ui/Dropdown-menu";
-import { Pencil1Icon } from "@radix-ui/react-icons";
+import { CopyIcon, InfoCircledIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import DeleteRatna from "../DropdownMenuActions/delete-ratna";
 import EditRatnas from "../DropdownMenuActions/edit-ratna";
 
@@ -16,17 +16,17 @@ type props = {
     lifafaId: string
 }
 
-export default function RatnaCard({ratna, access, lifafaId}: props) {
+export default function RatnaCard({ratna, lifafaId}: props) {
     const user = useAuth();
     const menuItems: ReactNode[] = [
         <DropdownMenuItem>
-            <Pencil1Icon /> Info
+            <InfoCircledIcon className="pr-2 size-6"/> Info
         </DropdownMenuItem>,
         <DropdownMenuItem onClick={(e: SyntheticEvent) => {
             e.stopPropagation();
             navigator.clipboard.writeText(ratna.content);
         }}>
-            <Pencil1Icon /> Copy
+            <CopyIcon className="pr-2 size-6"/> Copy
         </DropdownMenuItem>
     ];
     if (!!isRatnaCreator(ratna, user.user.uid)) {
@@ -35,9 +35,18 @@ export default function RatnaCard({ratna, access, lifafaId}: props) {
             <DeleteRatna ratna={ratna} lifafaId={lifafaId}/>
         ])
     }
-    console.log('menu items created', menuItems);
+
+    function openContent(e: SyntheticEvent) {
+        console.log('clicked');
+        e.stopPropagation();
+        if (!!isValidUrl(ratna.content)) {
+            window.open(ratna.content, '_blank');
+        }
+    }
     return (
-        <Flex justify="between" className="p-6 border-b-[1px]">
+        <Flex justify="between"
+            className="p-6 border-b-[1px] hover:bg-light-surfaceDim hover:cursor-pointer"
+            onClick={(e: SyntheticEvent) => openContent(e)}>
             <CardInfo ratna={ratna}/>
             <RatnaMenuComponent>
                 {

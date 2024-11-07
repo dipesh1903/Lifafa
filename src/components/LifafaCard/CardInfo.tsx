@@ -15,8 +15,8 @@ export default function CardInfo({lifafa}: props) {
     } = lifafa;
 
     return (
-        <Flex direction="column" gap="1.5">
-            <Heading size="4">{name || 'A lifafa'}</Heading>
+        <Flex direction="column" className="text-light-onSurfaceVariant" gap="1.5">
+            <Heading size="4" >{name || 'A lifafa'}</Heading>
             <p>{userInfo?.name}</p>
             <p>{createdAt.toDate().toDateString()}</p>
             <p>{description}</p>

@@ -15,6 +15,7 @@ import { isLifafaOwner, isPasswordMatching, isUserHasLifafaAccess, isUserHasProt
 import LifafaLocked from "../../components/lifafa-lock";
 import LifafaJoin from "../../components/lifafa-join";
 import RatnaList from "../../components/Ratna/ratna-list";
+import Loader from "../../components/ui/loader";
 
 export default function LifafaPage({lifafaContext}: {lifafaContext?: LifafaContextDataType}) {
     const navigate = useNavigate();
@@ -36,6 +37,7 @@ export default function LifafaPage({lifafaContext}: {lifafaContext?: LifafaConte
     } = user.user;
 
     useEffect(() => {
+        console.log('lifafa context is', lifafaContext);
         if (lifafaId && lifafaContext?.data[lifafaId] && lifafaContext?.data[lifafaId]?.lifafa) {
             handleLifafaScreen(lifafaContext?.data[lifafaId]?.lifafa, lifafaContext?.data[lifafaId].userAccess?.[uid], uid);
         }
@@ -95,16 +97,18 @@ export default function LifafaPage({lifafaContext}: {lifafaContext?: LifafaConte
     }, [location])
 
     return (
-        <Box ref={ref}>
-            { !isLoading || isLoading === pageStatus.LOADING ? <div>Loading screen</div> : screenType === LifafaAccessScreen.SHOW_PASSWORD ? 
+        <Box ref={ref} className=" border-light-outlineVariant border-x-[0.5px] flex flex-1">
+            { !isLoading || isLoading === pageStatus.LOADING ? <Flex align="center" justify="center" flexGrow="1"><Loader /></Flex> : screenType === LifafaAccessScreen.SHOW_PASSWORD ? 
             <LifafaLocked onSuccess={() => setScreenType(LifafaAccessScreen.SHOW_RATNAS)} lifafa={lifafa}/> : screenType === LifafaAccessScreen.SHOW_ADD_JOIN ? <LifafaJoin onSuccess={() => setScreenType(LifafaAccessScreen.SHOW_RATNAS)} lifafa={lifafa}/> : <>
-            <Flex className="max-w-2xl min-h-dvh">
+            <Flex className="max-w-2xl min-h-dvh flex-1">
                 <Box className="w-full min-h-[100vh]">
-                    <Box className="py-4 border-y-[1px] border-slate-100 px-4">
-                        {lifafaId && lifafaContext?.data[lifafaId]?.lifafa && !!isLifafaOwner(lifafaContext?.data[lifafaId]?.lifafa, uid) &&
+                    <Box className="py-4 border-y-[1px] border-light-outlineVariant  px-4">
+                        {lifafaId && lifafaContext?.data[lifafaId]?.lifafa &&
+                        (!!isLifafaOwner(lifafaContext?.data[lifafaId]?.lifafa, uid) ||
+                        !!isUserHasProtectedAccess(lifafaContext?.data[lifafaId]?.lifafa, uid))  &&
                             <CreateRatnaInput lifafaId={lifafaId || ''} /> }
                     </Box>
-                    <Box className="py-4 border-slate-100">
+                    <Box className="bg-light-surface ">
                         <MemoComp>
                             <RatnaList lifafaId={lifafaId || ''}/>
                         </MemoComp>

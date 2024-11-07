@@ -19,7 +19,7 @@ export default function EditRatnas({ratna}: props) {
                     }
                 })
             }}>
-                <Pencil1Icon /> edit
+                <Pencil1Icon className="pr-2 size-6"/> edit
             </DropdownMenuItem>
         </>
     )

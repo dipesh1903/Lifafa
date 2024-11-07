@@ -17,9 +17,10 @@ export default function CardInfo({ratna}: props ) {
     return (
         <Flex direction="column" gap="1.5" onClick={openContent}>
             {
-                ratna.name && <Heading size="4">{ratna.name}</Heading>
+                ratna.name && <Heading size="5">{ratna.name}</Heading>
             }
-            <p className="max-h-60">{ratna.content}</p>
+            <p className="max-h-60 font-semibold text-lg">{ratna.content}</p>
+            {ratna.description && <p className="max-h-60 pt-2">{ratna.description}</p> }
         </Flex>
     )
 }
