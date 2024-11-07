@@ -15,6 +15,7 @@ import { Timestamp } from "firebase/firestore";
 import { useRatnaDispatch } from "../store/ratnas/context";
 import { RatnaActionFactory } from "../store/ratnas/actionCreator";
 import { useConfig } from "../store/config/context";
+import { PrimaryButton } from "./ui/Button";
 
 type props = {
     ratna?: RatnaFE,
@@ -101,8 +102,8 @@ function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string
                         ...register("ratnaDescription")
                     }/>
                 </Flex>
-                <Flex justify="end">
-                    <Button type="submit" className="w-full group-invalid:pointer-events-none group-invalid:opacity-30 group-invalid:cursor-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 my-4 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" variant="solid">Save</Button>
+                <Flex justify="end" className="w-full mt-4">
+                    <PrimaryButton type="submit" className="justify-self-center group-invalid:pointer-events-none group-invalid:opacity-30 group-invalid:cursor-none focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center" variant="solid">Save</PrimaryButton>
                 </Flex>
                 </form>
             </Flex>
@@ -155,7 +156,7 @@ export default function EditRatna({ratna}: props) {
                     document.body.style.pointerEvents = "auto";
                 }, 1000)}}>
                 <DrawerOverlay>
-                    <DrawerContent style={{left: `${(drawerPos).left}px`, width: `${(drawerPos).width}px` , boxShadow: 'rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px'}} className={cn(" bg-slate-100 flex flex-col p-4 fixed bottom-0 m-auto left-[20px] h-[80%]")}>
+                    <DrawerContent style={{left: `${(drawerPos).left}px`, width: `${(drawerPos).width}px` , boxShadow: 'rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px'}} className={cn("flex flex-col p-4 fixed bottom-0 m-auto left-[20px] h-[80%] bg-light-surface")}>
                         <RatnaForm ratna={state.ratna} lifafaId={lifafaId} onClose={onDrawerClose}/>
                     </DrawerContent>
                 </DrawerOverlay>

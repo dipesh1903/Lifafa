@@ -10,6 +10,9 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createLifafa, getLifafaPassword, updateLifafa } from "../../api/api";
 import { useAuth } from "../../store/auth/context";
 import { Timestamp } from "firebase/firestore";
+import Label from "../ui/Label";
+import { Input } from "../ui/input";
+import { PrimaryButton } from "../ui/Button";
 
 type props = {
     open: boolean,
@@ -107,8 +110,8 @@ export default function CreateLifafaDialog() {
                 <form className="group" onSubmit={handleSubmit(onSubmit, onSubmitErr)}>
                     <Box>
                         <div>
-                            <label htmlFor="lifafaName" className={`block mb-2 text-sm font-medium text-gray-900 dark:text-white`}>Name</label>
-                            <input type="text"
+                            <Label htmlFor="lifafaName">Name</Label>
+                            <Input type="text"
                                 {...register('lifafaName', {
                                     required: 'Lifafa name is required',
                                     minLength: {
@@ -117,7 +120,7 @@ export default function CreateLifafaDialog() {
                                     }
                                 })}
                                 id="lifafaName"
-                                className={`peer  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${errors?.lifafaName ? '[&:not(:placeholder-shown):not(:focus)]:border-red-500 focus:border-red-500' : 'focus:ring-blue-500 focus:border-blue-500'}`} placeholder="John" />
+                                 placeholder="John" />
                             
                             <span className="mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                                 {errors?.lifafaName?.message}
@@ -127,8 +130,8 @@ export default function CreateLifafaDialog() {
                         {
                         access === LifafaAccessType.PROTECTED ?
                         <div>
-                            <label htmlFor="protectedPassword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                            <input
+                            <Label htmlFor="protectedPassword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</Label>
+                            <Input
                             type="text"
                             {...register('protectedPassword', {
                                 required: 'password is required',
@@ -137,15 +140,14 @@ export default function CreateLifafaDialog() {
                                     message: 'Atleast 4 character'
                                 }
                             })}
-                            id="protectedPassword" className="peer bg-gray-50 border invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="****" />
+                            id="protectedPassword" placeholder="****" />
                             <span className="required:border-red-500 mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                                 {errors?.protectedPassword?.message}
                             </span>
                         </div> : null
                         }
                         <Flex justify="end">
-                            <button type="submit"
-                                className="group-invalid:pointer-events-none group-invalid:opacity-30 group-invalid:cursor-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 my-4 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create</button>
+                            <PrimaryButton type="submit">Create</PrimaryButton>
                         </Flex>
                     </Box>
                 </form>
