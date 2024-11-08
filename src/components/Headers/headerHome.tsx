@@ -12,7 +12,7 @@ export default function HeaderHome({lifafa}: {lifafa: LifafaFE}) {
         <Flex justify="between" align="center" className="w-full border-b-[1px] bg-light-primaryContainer p-4">
             <HeaderInfo title={lifafa.name}/>
             <Flex gap="2" align="center" className="max-sm:hidden">
-                <Button  variant="soft" radius="full" onClick={() => setOpen(true)}>
+                <Button  variant="soft" radius="full" className="bg-light-primary text-light-onPrimary" onClick={() => setOpen(true)}>
                     <ChevronDownIcon /> Switch Lifafa
                 </Button>
                 {/* <IconButton variant="ghost">

@@ -88,7 +88,7 @@ export default function PopoverDemo({ratna}: props) {
     return (
         <Popover.Root open={popoverOpen} onOpenChange={setPopoverOpen}>
             <Popover.Trigger>
-                <IconButton variant="ghost" className="w-fit mt-6" onClick={(e) => {e.stopPropagation(); setPopoverOpen(true)}}>
+                <IconButton variant="ghost" className="w-fit" onClick={(e) => {e.stopPropagation(); setPopoverOpen(true)}}>
                     <img src={TagsIcon} className="size-5"/>
                 </IconButton>
             </Popover.Trigger>
@@ -102,7 +102,7 @@ export default function PopoverDemo({ratna}: props) {
                         <Input value={search} onChange={(e) => searchTag(e.target.value)} />
                     </div>
                     { ((tags && tags.length)) ?
-                        <div>
+                        <div className="h-32 overflow-scroll">
                             {(tags).map(tag => {
                                 return (
                                     <div key={tag} className="flex items-center p-2 hover:cursor-pointer hover:bg-light-primaryContainer">

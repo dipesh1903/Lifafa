@@ -106,7 +106,7 @@ export default function LifafaPage() {
                         <HeaderHome lifafa={lifafaId && lifafaContext?.data[lifafaId]?.lifafa || {} as LifafaFE}/>
                         <Flex className="max-w-2xl min-h-dvh flex-1 w-full border-x-[0.5px] border-light-outlineVariant">
                             <Box className="w-full min-h-[100vh]">
-                                <Box className="py-4  bg-light-primaryFixedDim bg-opacity-10  px-4">
+                                <Box className="py-4  bg-light-primaryFixedDim bg-opacity-10  px-4 border-light-outline border-b-2">
                                     {lifafaId && lifafaContext?.data[lifafaId]?.lifafa &&
                                     (!!isLifafaOwner(lifafaContext?.data[lifafaId]?.lifafa, uid) ||
                                     !!isUserHasProtectedAccess(lifafaContext?.data[lifafaId]?.lifafa, uid))  &&

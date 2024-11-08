@@ -1,6 +1,6 @@
 import { DoubleArrowUpIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { Flex, Tooltip, IconButton } from "@radix-ui/themes";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import LifafaListDrawer from "../Drawers/Lifafa";
 import { useState } from "react";
 import { useConfig } from "../../store/config/context";
@@ -10,11 +10,13 @@ export default function SideBarMobile() {
     const [open , setOpen] = useState(false);
     const config = useConfig();
     const { lifafaId } = useParams();
+    const location = useLocation();
 
     function onClick() {
         if (lifafaId) {
-            navigate(`lifafa/${lifafaId}/ratna/create`, {
-                state: {ratna: {}}
+            navigate(`${location.pathname}/ratna/create`, {
+                state: {ratna: {}},
+                relative: 'path'
             })
         } else {
             navigate('lifafa/create')

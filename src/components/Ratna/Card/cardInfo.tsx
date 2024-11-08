@@ -2,6 +2,7 @@ import { Flex, Heading } from "@radix-ui/themes";
 import { RatnaFE } from "../../../types/documentFETypes";
 import { isValidUrl } from "../../../utils";
 import PopoverDemo from "../../tag-popover";
+import TagList from "../../tags-list";
 
 type props = {
     ratna: RatnaFE
@@ -22,9 +23,14 @@ export default function CardInfo({ratna}: props ) {
             }
             <p className="max-h-60 font-semibold text-lg">{ratna.content}</p>
             {ratna.description && <p className="max-h-60 pt-2">{ratna.description}</p> }
-            <div className="mt-4">
-                <PopoverDemo ratna={ratna}/>
-            </div>
+            <Flex align="center" className="flex mt-4">
+                <div className="mt-2 mr-2">
+                    <PopoverDemo ratna={ratna}/>
+                </div>
+                {
+                    ratna.tags && ratna.tags.length && <TagList tags={ratna.tags}/>
+                }
+            </Flex>
         </Flex>
     )
 }
