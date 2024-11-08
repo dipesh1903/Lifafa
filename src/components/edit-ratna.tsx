@@ -16,6 +16,7 @@ import { useRatnaDispatch } from "../store/ratnas/context";
 import { RatnaActionFactory } from "../store/ratnas/actionCreator";
 import { useConfig } from "../store/config/context";
 import { PrimaryButton } from "./ui/Button";
+import Error from "./ui/text-error";
 
 type formValues = {
     ratnaName: string,
@@ -64,9 +65,9 @@ function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string
                                 }
                             })
                         }></Input>
-                        <span className="mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                        <Error>
                             {errors?.ratnaName?.message}
-                        </span>
+                        </Error>
                 </Flex>
                 {
                     isValidUrl(ratna.content) ? 
@@ -87,9 +88,9 @@ function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string
                                     required: 'Cannot be empty'
                                 })
                             }/>
-                            <span className="mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                            <Error>
                                 {errors?.ratnaContent?.message}
-                            </span>
+                            </Error>
                     </Flex>
                 }
                 <Flex direction="column">

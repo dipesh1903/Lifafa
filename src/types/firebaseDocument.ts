@@ -41,6 +41,7 @@ export interface RatnaDoc extends DocCreaterInfo {
     tags?: string[];
     isFavourite?: boolean;
     info?: string;
+    creatorName: string
 }
 
 export interface RatnaDocUpdate extends Partial<Omit<RatnaDoc, "createdBy" | "createdAt">>, DocUpdaterInfo {}

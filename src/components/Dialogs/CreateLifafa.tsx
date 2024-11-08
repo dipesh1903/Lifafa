@@ -12,6 +12,7 @@ import { Timestamp } from "firebase/firestore";
 import Label from "../ui/Label";
 import { Input } from "../ui/input";
 import { PrimaryButton } from "../ui/Button";
+import Error from "../ui/text-error";
 
 type formValues = {
     lifafaName: string
@@ -116,9 +117,9 @@ export default function CreateLifafaDialog() {
                                 id="lifafaName"
                                  placeholder="John" />
                             
-                            <span className="mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                            <Error>
                                 {errors?.lifafaName?.message}
-                            </span>
+                            </Error>
                         </div>
                         <AccessRadioGroup radioItems={radioItems} defaultValue={location.state?.accessType || LifafaAccessType.PRIVATE} onValueChange={(val) => {setAccess(val as LifafaAccessType)}} className="py-4"/>
                         {
@@ -135,9 +136,9 @@ export default function CreateLifafaDialog() {
                                 }
                             })}
                             id="protectedPassword" placeholder="****" />
-                            <span className="required:border-red-500 mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                            <Error>
                                 {errors?.protectedPassword?.message}
-                            </span>
+                            </Error>
                         </div> : null
                         }
                         <Flex justify="end">

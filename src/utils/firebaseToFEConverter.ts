@@ -28,7 +28,8 @@ export function convertRatnaToFE(id: string, data: DocumentData): RatnaFE {
             info: data.info,
             id,
             createdAt: data.createdAt,
-            createdBy: data.createdBy
+            createdBy: data.createdBy,
+            creatorName: data.creatorName
         }
     )
 }
