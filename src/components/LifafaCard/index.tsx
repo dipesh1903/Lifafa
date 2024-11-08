@@ -8,6 +8,7 @@ import { useAuth } from "../../store/auth/context";
 import { isLifafaOwner, isUserHasProtectedAccess, isUserHasPublicAccess } from "../../utils";
 import { ReactNode } from "react";
 import LeaveLifafa from "./DropdownMenuActions/leave-lifafa";
+import PopoverDemo from "../tag-popover";
 
 type props = {
     lifafa: LifafaFE
@@ -33,7 +34,7 @@ export default function LifafaCard({lifafa}: props) {
             (val && val.length) &&  <Flex direction="column" className="w-full">
                 <Flex justify="between">
                     <CardInfo lifafa={lifafa}/>
-                    <LifafaMenuComponent lifafa={lifafa} menuItems={val}/>
+                    {/* <LifafaMenuComponent lifafa={lifafa} menuItems={val}/> */}
                 </Flex>
                 <LifafaCardActions lifafa={lifafa} />
             </Flex>

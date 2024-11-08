@@ -1,6 +1,7 @@
 import { Flex, Heading } from "@radix-ui/themes";
 import { RatnaFE } from "../../../types/documentFETypes";
 import { isValidUrl } from "../../../utils";
+import PopoverDemo from "../../tag-popover";
 
 type props = {
     ratna: RatnaFE
@@ -21,6 +22,9 @@ export default function CardInfo({ratna}: props ) {
             }
             <p className="max-h-60 font-semibold text-lg">{ratna.content}</p>
             {ratna.description && <p className="max-h-60 pt-2">{ratna.description}</p> }
+            <div className="mt-4">
+                <PopoverDemo ratna={ratna}/>
+            </div>
         </Flex>
     )
 }

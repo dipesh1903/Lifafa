@@ -10,6 +10,7 @@ import { CopyIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import DeleteRatna from "../DropdownMenuActions/delete-ratna";
 import EditRatnas from "../DropdownMenuActions/edit-ratna";
 import { Month } from "../../../constant";
+import PopoverDemo from "../../tag-popover";
 
 type props = {
     ratna: RatnaFE,
@@ -53,16 +54,16 @@ export default function RatnaCard({ratna, lifafaId}: props) {
                 <div className="font-semibold absolute top-[10px] text-light-onPrimary bg-light-primary left-[-15px] text-xs border-2 rounded-full border-light-outlineVariant p-[4px]">{getDisplayName(ratna.creatorName)}</div>
             </div>
             <Flex direction="column" flexGrow="1" className="p-6 pt-[12px] border-b-[1px] ">
-            <Flex justify="between"
-                className=""
-                onClick={(e: SyntheticEvent) => openContent(e)}>
-                <CardInfo ratna={ratna}/>
-                <RatnaMenuComponent>
-                    {
-                        ...menuItems
-                    }
-                </RatnaMenuComponent>
-            </Flex>
+                <Flex justify="between"
+                    className=""
+                    onClick={(e: SyntheticEvent) => openContent(e)}>
+                    <CardInfo ratna={ratna}/>
+                    <RatnaMenuComponent>
+                        {
+                            ...menuItems
+                        }
+                    </RatnaMenuComponent>
+                </Flex>
             </Flex>
         </Flex>
     )
