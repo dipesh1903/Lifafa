@@ -7,11 +7,11 @@ import { convertRatnaToFE } from "../utils/firebaseToFEConverter";
 import { ApiStatus } from "../constant";
 import { handleError } from "../utils/handleError";
 
-export async function CreateRatna(ratna: RatnaDoc, lifafaId: string): Promise<string> {
+export async function CreateRatna(ratna: RatnaDoc, lifafaId: string): Promise<RatnaFE> {
     try {
         const ref = collection(db, COLLECTIONS.LIFAFA.index, lifafaId, COLLECTIONS.LIFAFA.ratna)
         const addRef = await addDoc(ref, ratna);
-        return Promise.resolve(addRef.id);
+        return Promise.resolve(convertRatnaToFE(addRef.id, ratna));
     } catch(error) {
         
         return Promise.reject(handleError(error))

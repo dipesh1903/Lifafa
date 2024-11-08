@@ -23,9 +23,7 @@ export default function RatnaList({lifafaId, lifafaContext}: {lifafaId: string, 
                 result => {
                     dispatch(RatnaActionFactory.fetchAllRatnasCompleted(lifafaId, result))
                 }
-            ).catch(err => {
-                
-            })
+            ).catch()
         }
     }, [])
 

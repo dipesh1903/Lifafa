@@ -24,7 +24,7 @@ export default function LifafaHomeContent() {
 
     return (
         <>
-            <Flex direction="column" className="w-full flex-1 min-h-[100vh] ml-[60px]">
+            <Flex direction="column" className="w-full flex-1 min-h-[100vh] max-sm:mb-[60px] md:max-2xl:ml-[60px]">
                 {lifafas.isFetching ? <Flex align="center" justify="center" flexGrow="1"><Loader /></Flex> : <>
                 <Flex direction="column" align="center" className="w-full bg-light-surfaceContainer flex-1">
                     <HeaderLifafaHome/>
@@ -32,7 +32,7 @@ export default function LifafaHomeContent() {
                         {
                             result.length ? result.map(item => {
                                 return (
-                                    <Box className="px-10 py-4 border-b-[0.5px] border-light-outlineVariant hover:bg-light-surfaceDim hover:cursor-pointer"
+                                    <Box className="px-10 py-4 border-b-[0.5px] border-light-outlineVariant hover:bg-light-primaryContainer hover:bg-opacity-50 hover:cursor-pointer"
                                     key={item.lifafa.id}
                                     onClick={() => navigate(`/lifafa/${item.lifafa.id}`)}>
                                         <LifafaCard 

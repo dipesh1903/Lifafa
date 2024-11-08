@@ -4,10 +4,13 @@ import { Flex } from "@radix-ui/themes";
 import SideBar from "../../components/Sidebar/desktop-sidebar";
 import useMobileLayout from "../../utils/hooks/useWindowDimension";
 import { useConfigDispatch } from "../../store/config/context";
+import { useMediaQuery } from "../../utils/hooks/useMediaQuery";
+import SideBarMobile from "../../components/Sidebar/mobile-sidebar";
 
 
 export default function HomePage() {
     const dimension = useMobileLayout();
+    const isDesktop = useMediaQuery('(min-width: 768px)')
     const ref = useRef(null);
     const dispatch = useConfigDispatch();
 
@@ -20,7 +23,9 @@ export default function HomePage() {
 
     return (
         <Flex className="max-w-2xl min-h-dvh flex-1" ref={ref}>
-            <SideBar/>
+            {
+                isDesktop ? <SideBar/> : <SideBarMobile />
+            }
             <Outlet/>
         </Flex>
     )

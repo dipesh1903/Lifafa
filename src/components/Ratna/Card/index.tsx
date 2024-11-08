@@ -6,7 +6,7 @@ import { ReactNode, SyntheticEvent } from "react";
 import { isRatnaCreator, isValidUrl } from "../../../utils";
 import { useAuth } from "../../../store/auth/context";
 import { DropdownMenuItem } from "../../ui/Dropdown-menu";
-import { CopyIcon, InfoCircledIcon, Pencil1Icon } from "@radix-ui/react-icons";
+import { CopyIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import DeleteRatna from "../DropdownMenuActions/delete-ratna";
 import EditRatnas from "../DropdownMenuActions/edit-ratna";
 
@@ -44,7 +44,7 @@ export default function RatnaCard({ratna, lifafaId}: props) {
         }
     }
     return (
-        <Flex direction="column" className="p-6 border-b-[1px] hover:bg-light-surfaceDim hover:cursor-pointer">
+        <Flex direction="column" className="p-6 border-b-[1px] hover:bg-light-primaryContainer hover:bg-opacity-50 hover:cursor-pointer">
             <Flex justify="between"
                 className=""
                 onClick={(e: SyntheticEvent) => openContent(e)}>

@@ -1,9 +1,8 @@
-import { IdCardIcon } from "@radix-ui/react-icons";
-import { Flex, IconButton, Button } from "@radix-ui/themes";
+import { Flex } from "@radix-ui/themes";
 import { useAuth } from "../../store/auth/context";
 import { RatnaFE } from "../../types/documentFETypes";
 import { CreateRatna } from "../../api/ratna";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
 import { useRatnaDispatch } from "../../store/ratnas/context";
 import { RatnaActionFactory } from "../../store/ratnas/actionCreator";
@@ -31,8 +30,8 @@ export default function CreateRatnaInput({lifafaId}: props) {
                 createdBy: user.user.uid,
                 creatorName: user.user.displayName || ''
             }
-            const ratnaId = await CreateRatna(ratna, lifafaId)
-            dispatch(RatnaActionFactory.createActionCompleted({...ratna, id: ratnaId}, lifafaId));
+            const result = await CreateRatna(ratna, lifafaId)
+            dispatch(RatnaActionFactory.createActionCompleted(result, lifafaId));
         } catch (_) {
         } finally {
             setValue('');
@@ -49,9 +48,6 @@ export default function CreateRatnaInput({lifafaId}: props) {
             </Textarea>
             </div>
             <Flex justify="end" align="center"> 
-                {/* <IconButton variant="ghost">
-                    <IdCardIcon width="22"/>
-                </IconButton> */}
                 <PrimaryButton className={cn("px-2 pt-2 w-[20%] mt-2", `${!value.length ? 'pointer-events-none bg-opacity-60' : ''}`)}
                 onClick={createRatna}>
                     Add

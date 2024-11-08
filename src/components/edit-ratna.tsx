@@ -10,13 +10,14 @@ import { Dialog, DialogContent } from "./ui/Dialog";
 import { Drawer, DrawerContent, DrawerOverlay } from "./ui/Drawer";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { updateRatna } from "../api/ratna";
+import { CreateRatna, updateRatna } from "../api/ratna";
 import { Timestamp } from "firebase/firestore";
 import { useRatnaDispatch } from "../store/ratnas/context";
 import { RatnaActionFactory } from "../store/ratnas/actionCreator";
 import { useConfig } from "../store/config/context";
 import { PrimaryButton } from "./ui/Button";
 import Error from "./ui/text-error";
+import { useAuth } from "../store/auth/context";
 
 type formValues = {
     ratnaName: string,
@@ -26,6 +27,7 @@ type formValues = {
 
 function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string, onClose: () => void})  { 
         const dispatch = useRatnaDispatch();
+        const user = useAuth();
         const {
             register,
             handleSubmit,
@@ -33,22 +35,35 @@ function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string
         } = useForm<formValues>({
             defaultValues: {
                 ratnaName: ratna.name || '',
-                ratnaContent: ratna.content,
-                ratnaDescription: ratna.description
+                ratnaContent: ratna.content || '',
+                ratnaDescription: ratna.description || ''
             }
         });
 
         const onSubmit: SubmitHandler<formValues> = (data: FieldValues) => {
-            updateRatna({
+            const doc = {
                 name: data.ratnaName,
                 updatedAt: Timestamp.fromDate(new Date()),
                 content: data.ratnaContent,
                 description: data.ratnaDescription
-            }, lifafaId, ratna.id).then(val => {
-                dispatch(RatnaActionFactory.updateRatnaCompleted(val, lifafaId, ratna.id))
-                
-            }).catch()
-            .finally(() => onClose())
+            }
+            if (ratna.id) {
+                updateRatna(doc, lifafaId, ratna.id).then(val => {
+                    dispatch(RatnaActionFactory.updateRatnaCompleted(val, lifafaId, ratna.id))
+                    
+                }).catch()
+                .finally(() => onClose())
+            } else {
+                CreateRatna({
+                    ...doc,
+                    creatorName: user.user.displayName || '',
+                    createdBy: user.user.uid,
+                    createdAt: Timestamp.fromDate(new Date())
+                }, lifafaId).then(val => {
+                    dispatch(RatnaActionFactory.createActionCompleted(val, lifafaId))
+                }).catch()
+                .finally(() => onClose())
+            }
         }
     
         return(

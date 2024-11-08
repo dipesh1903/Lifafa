@@ -53,7 +53,7 @@ export default function LifafaListDrawer({setOpen , open}: props) {
                 <DrawerOverlay>
                     <DrawerContent style={{left: `${(config).left}px`, width: `${(config).width}px` }} className={cn("p-4 fixed bottom-0 flex m-auto left-[20px] h-[80%]")}>
                         <Flex direction="column" className="overflow-scroll">
-                        <PrimaryButton onClick={() => { onOpenChange(false); navigate('/lifafa/create')}} className="mt-4">Create</PrimaryButton>
+                        <PrimaryButton onClick={() => { onOpenChange(false); navigate('/lifafa/create')}} className="my-4">Create</PrimaryButton>
                         <Box className="border-y-[0.5px] overflow-scroll mt-2 w-full bg-light-surface border-light-outlineVariant">
                         {
                             result.map(item => {

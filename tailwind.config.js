@@ -56,6 +56,9 @@ export default {
           "surfaceContainerHigh": "#E7E8EE",
           "surfaceContainerHighest": "#E2E2E9"
       },
+      },
+      screens: {
+        'sm': '768px'
       }
     },
   },

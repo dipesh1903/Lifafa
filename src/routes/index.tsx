@@ -4,9 +4,8 @@ import Login from "../pages/Login";
 import LifafaPage from "../pages/Lifafa";
 import LifafaListDrawer from "../components/Drawers/Lifafa";
 import LifafaHomeContent from "../pages/LifafaHomeContent";
-import { MemoComp } from "../store/lifafas/context";
-import CreateLifafaDialog from "../components/Dialogs/CreateLifafa";
 import EditRatna from "../components/edit-ratna";
+import CreateLifafaForm from "../components/create-edit-Lifafa/CreateLifafa";
 
 
 
@@ -34,11 +33,11 @@ const router = createBrowserRouter(
                   },
                   {
                     path: 'create',
-                    element: <CreateLifafaDialog/>
+                    element: <CreateLifafaForm/>
                   },
                   {
                     path: ':lifafaId/edit',
-                    element: <CreateLifafaDialog/>
+                    element: <CreateLifafaForm/>
                   },
                 ]
             },
@@ -49,25 +48,13 @@ const router = createBrowserRouter(
                   {
                     path: 'ratna/:ratnaId/edit',
                     element: <EditRatna />
+                  },
+                  {
+                    path: 'ratna/create',
+                    element: <EditRatna />
                   }
                 ]
             },
-            {
-                path: '/lifafa/:lifafaId/ratna/:ratnaId/edit',
-                element: ''
-            },
-            {
-                path: '/favourites',
-                element: ''
-            },
-            {
-                path: 'tags',
-                element: ''
-            },
-            {
-                path: '/logout',
-                element: ''
-            }
         ]
       },
       {
