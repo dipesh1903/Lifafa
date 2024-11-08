@@ -5,7 +5,7 @@ import { Box, Flex } from "@radix-ui/themes";
 import { LifafaFE, SharedUserFE } from "../../types/documentFETypes";
 import LifafaListDrawer from "../../components/Drawers/Lifafa";
 import CreateRatnaInput from "../../components/CreateRatna";
-import { LifafaContextDataType, useGetLifafaFromPath, useLifafaDispatch } from "../../store/lifafas/context";
+import { useLifafa, useLifafaDispatch } from "../../store/lifafas/context";
 import { LifafaActionFactory } from "../../store/lifafas/actionCreator";
 import { LifafaAccessScreen, LifafaAccessType, pageStatus } from "../../constant";
 import { fetchLifafa } from "../../api/api";
@@ -16,7 +16,7 @@ import RatnaList from "../../components/Ratna/ratna-list";
 import Loader from "../../components/ui/loader";
 import HeaderHome from "../../components/Headers/headerHome";
 
-export default function LifafaPage({lifafaContext}: {lifafaContext?: LifafaContextDataType}) {
+export default function LifafaPage() {
     const navigate = useNavigate();
     const user = useAuth();
     const ref = useRef(null);
@@ -28,17 +28,11 @@ export default function LifafaPage({lifafaContext}: {lifafaContext?: LifafaConte
     const [screenType, setScreenType] = useState<LifafaAccessScreen>();
     const currPageLifafa = useRef<LifafaFE>();
     const [lifafa, setLifafa] = useState<LifafaFE>({} as LifafaFE);
+    const lifafaContext = useLifafa();
 
     const {
         uid
     } = user.user;
-
-    // useEffect(() => {
-    //     if (lifafaId && lifafaContext?.data[lifafaId] && lifafaContext?.data[lifafaId]?.lifafa) {
-    //         handleLifafaScreen(lifafaContext?.data[lifafaId]?.lifafa, lifafaContext?.data[lifafaId].userAccess?.[uid], uid);
-    //     }
-    // }, [lifafaContext]);
-
 
     function handleLifafaScreen(lifafa: LifafaFE, access: SharedUserFE, uid: string) {
         if (isLifafaOwner(lifafa, uid)) {
@@ -58,12 +52,11 @@ export default function LifafaPage({lifafaContext}: {lifafaContext?: LifafaConte
     }
 
     useEffect(() => {
-        console.log('lifafa context is', lifafaContext)
         if (!lifafaId || !uid || !lifafaContext) return;
         const {
             data: lifafaData
         } = lifafaContext;
-        console.log('lifafa context is', lifafaData, lifafaData[lifafaId]?.lifafa?.id, lifafaData[lifafaId]?.userAccess?.[uid]?.id)
+        
         if (lifafaId && (!lifafaData || !lifafaData[lifafaId]?.lifafa?.id || !lifafaData[lifafaId]?.userAccess?.[uid]?.id)) {
             fetchLifafa(lifafaId, uid).then(response => {
                 if (response) {
@@ -109,11 +102,11 @@ export default function LifafaPage({lifafaContext}: {lifafaContext?: LifafaConte
                             onSuccess={() => setScreenType(LifafaAccessScreen.SHOW_RATNAS)} 
                             lifafa={lifafa}/> :
                 <>
-                    <Flex direction="column" justify="between" align="center" className="w-full bg-light-surfaceContainer ml-[60px]">
+                    <Flex direction="column" justify="between" align="center" className="w-full ml-[60px]">
                         <HeaderHome lifafa={lifafaId && lifafaContext?.data[lifafaId]?.lifafa || {} as LifafaFE}/>
                         <Flex className="max-w-2xl min-h-dvh flex-1 w-full border-x-[0.5px] border-light-outlineVariant">
                             <Box className="w-full min-h-[100vh]">
-                                <Box className="py-4 border-y-[1px] border-light-outlineVariant  px-4">
+                                <Box className="py-4 border-y-[1px] border-light-outlineVariant bg-light-surface  px-4">
                                     {lifafaId && lifafaContext?.data[lifafaId]?.lifafa &&
                                     (!!isLifafaOwner(lifafaContext?.data[lifafaId]?.lifafa, uid) ||
                                     !!isUserHasProtectedAccess(lifafaContext?.data[lifafaId]?.lifafa, uid))  &&

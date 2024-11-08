@@ -18,7 +18,8 @@ export const AuthActionFactory = {
     signOut: () => ({
         type: AuthActions.LOGOUT,
         payload: {
-            user: null
+            user: null,
+            isFirebaseAuthenticated: false
         }
     }),
 

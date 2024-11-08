@@ -15,27 +15,27 @@ export async function fetchLifafa(lifafaId: string, uid: string): Promise<{lifaf
         const docRef = doc(db, COLLECTIONS.LIFAFA.index, lifafaId);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-            console.log('came here', docSnap.data());
+            
             lifafa = convertLifafaToFE(docSnap.id, docSnap.data());
-            console.log('lifafa fetched is ', lifafa, uid);
+            
             let access = lifafa.createdBy === uid ? {accessType: LifafaAccessType.PRIVATE, id: uid} as SharedUserFE : {} as SharedUserFE
             try {
                 if (!access.accessType) {
                     access = await getCurrentUserLifafaAccess(lifafaId, uid);
-                    console.log('access is ', access);
+                    
                 }
             } catch (error) {
-                console.log('lError here again ',  error);
+                
             }
             finally {
                 return Promise.resolve({lifafa: convertLifafaToFE(docSnap.id, docSnap.data()), access: access as SharedUserFE});
             }
         } else {
-            console.log('error here', lifafa, uid);
+            
             return Promise.resolve({lifafa: {} as LifafaFE , access: {} as SharedUserFE});
         }
     } catch(error) {
-        console.log('Error is ', error);
+        
         return Promise.reject(handleError(error));
     }
 }
@@ -79,7 +79,7 @@ export async function updateLifafa(lifafa: LifafaDocUpdate, lifafaId: string, ui
             lifafaId
         });
     } catch(error) {
-        console.log('the error is random numbers', error);
+        
         return Promise.reject(handleError(error));
     }
 }
@@ -89,7 +89,7 @@ export async function createLifafa(lifafa: LifafaDoc, uid: string, password?: st
         const batch = writeBatch(db);
         const lifafaId = new IdGenerator().generate();
         const addRef = doc(db, COLLECTIONS.LIFAFA.index, lifafaId);
-        console.log(lifafaId, lifafa);
+        
         batch.set(addRef, {
             ...lifafa
         } as LifafaDoc);
@@ -105,7 +105,7 @@ export async function createLifafa(lifafa: LifafaDoc, uid: string, password?: st
         await batch.commit();
         return Promise.resolve(convertLifafaToFE(lifafaId, lifafa));
     } catch(error) {
-        console.log('createLifafa', error);
+        
         return Promise.reject(handleError(error));
     }
 }
@@ -126,7 +126,7 @@ export async function addUser(uid: string , lifafaId: string, user: SharedUserDo
         await batch.commit();
         return Promise.resolve(convertSharedUserToFE(uid, user));
     } catch (error) {
-        console.log('errors is for add user', error)
+        
         return Promise.reject(handleError(error));
     }
 }
@@ -141,7 +141,7 @@ export async function getAllLifafa(uid: string): Promise<LifafaFE[]> {
         });
         return Promise.resolve(result);
     } catch (error) {
-        console.log('get all lifafa', error);
+        
         return Promise.reject(handleError(error));
     }
 }
@@ -170,7 +170,7 @@ export async function getLifafaPassword(lifafaId: string, uid: string): Promise<
             return Promise.resolve('')
         }
     } catch(error) {
-        console.log(error);
+        
         return Promise.reject(error);
     }
 }
@@ -189,16 +189,16 @@ export async function deleteLifafa(lifafaId: string, uid: string) {
         const snapShot = await getDocs(q);
         snapShot.forEach(async item => {
             try {
-                console.log('delete counts ratnas');
+                
                 await deleteDoc(doc(db, COLLECTIONS.LIFAFA.index, lifafaId, COLLECTIONS.LIFAFA.sharedUsers, item.id))
             } catch (error) {
-                console.log('error 234', error);
+                
             }
         })
         await deleteDoc(doc(db, COLLECTIONS.LIFAFA.index, lifafaId, COLLECTIONS.LIFAFA.private, uid))
         await deleteDoc(doc(db, COLLECTIONS.LIFAFA.index, lifafaId));
     } catch (error) {
-        console.log('error is ', error);
+        
     }
 }
 
@@ -218,7 +218,7 @@ export async function joinPublicLifafa(lifafaId: string, uid: string, access: Sh
         await batch.commit();
         return Promise.resolve(convertSharedUserToFE(uid, access));
     } catch (err) {
-        console.log('error is ', err);
+        
         return Promise.reject(err);
     }
 }
@@ -236,7 +236,7 @@ export async function leavePublicLifafa(lifafaId: string, uid: string): Promise<
         await batch.commit();
         return Promise.resolve(lifafaId);
     } catch (err) {
-        console.log('error is ', err);
+        
         return Promise.reject(err);
     }
 }
@@ -254,7 +254,7 @@ export async function leaveProtectedLifafa(uid: string , lifafaId: string): Prom
         await batch.commit();
         return Promise.resolve(lifafaId);
     } catch (error) {
-        console.log('errors is for add user', error)
+        
         return Promise.reject(handleError(error));
     }
 }

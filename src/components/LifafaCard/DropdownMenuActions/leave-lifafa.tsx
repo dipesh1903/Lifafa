@@ -25,7 +25,7 @@ export default function LeaveLifafa({lifafa}: props) {
             .then(_ => {
                 dispatch(LifafaActionFactory.deleteLifafaCompleted(lifafa.id))
             })
-            .catch(_ => console.log('remove failed'))
+            .catch()
         } else if (
             lifafa.accessType === LifafaAccessType.PROTECTED
         ) {
@@ -33,12 +33,12 @@ export default function LeaveLifafa({lifafa}: props) {
             .then(_ => {
                 dispatch(LifafaActionFactory.deleteLifafaCompleted(lifafa.id))
             })
-            .catch(_ => console.log('remove protected failed'))
+            .catch()
         }
     }
     return (
         <DropdownMenuItem onClick={(e: SyntheticEvent<HTMLElement>) => {e.stopPropagation(); leaveLifafa(e)}}>
-            <TrashIcon className="pr-2 size-6" onClick={() => console.log('nothing called')}/> Leave
+            <TrashIcon className="pr-2 size-6" /> Leave
         </DropdownMenuItem>
     )
 }

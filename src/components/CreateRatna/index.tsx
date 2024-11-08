@@ -15,7 +15,7 @@ type props = {
     setRatna?: (ratna: RatnaFE) => void
 }
 
-export default function CreateRatnaInput({lifafaId , setRatna}: props) {
+export default function CreateRatnaInput({lifafaId}: props) {
 
     const inputRef = useRef(null);
     const user = useAuth();
@@ -40,13 +40,15 @@ export default function CreateRatnaInput({lifafaId , setRatna}: props) {
 
     return (
         <Flex direction="column" gap="2">
-            <Textarea autoFocus ref={inputRef}  className="light-secondaryappearance-none focus:outline-none w-full h-30 p-4 resize-none bg-white " placeholder="Add your ratna">
+            <div className="ring-light-secondary ring-2 rounded-lg">
+            <Textarea autoFocus ref={inputRef}  className="m-0 focus:ring-0 rounded-lg focus:border-none outline-none focus:ring-inset light-secondaryappearance-none focus:outline-none w-full h-30 p-4 resize-none bg-white " placeholder="Add your ratna">
             </Textarea>
-            <Flex justify="end" align="center">
+            </div>
+            <Flex justify="end" align="center"> 
                 {/* <IconButton variant="ghost">
                     <IdCardIcon width="22"/>
                 </IconButton> */}
-                <PrimaryButton className="px-2 pt-2 w-[20%]" onClick={createRatna}>
+                <PrimaryButton className="px-2 pt-2 w-[20%] mt-2" onClick={createRatna}>
                     Add
                 </PrimaryButton>
             </Flex>

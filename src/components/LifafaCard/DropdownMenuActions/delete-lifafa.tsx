@@ -16,16 +16,16 @@ export default function DeleteLifafa({lifafa}: props) {
     const dispatch = useLifafaDispatch();
     function deleteLifafas(e: SyntheticEvent) {
         e.stopPropagation();
-        console.log('called');
+        
         deleteLifafa(lifafa.id, user.user.uid)
         .then(_ => {
             dispatch(LifafaActionFactory.deleteLifafaCompleted(lifafa.id))
         })
-        .catch(_ => console.log('delete failed'))
+        .catch()
     }
     return (
         <DropdownMenuItem onClick={(e: SyntheticEvent<HTMLElement>) => {e.stopPropagation(); deleteLifafas(e)}}>
-            <TrashIcon className="pr-2 size-6" onClick={() => console.log('nothing called')}/> delete
+            <TrashIcon className="pr-2 size-6" /> Delete
         </DropdownMenuItem>
     )
 }

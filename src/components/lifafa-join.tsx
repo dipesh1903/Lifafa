@@ -24,7 +24,7 @@ export default function LifafaJoin({lifafa, onSuccess}: props) {
         }).then(val => {
             dispatch(LifafaActionFactory.fetchSingleLifafaCompleted(lifafa, val))
         })
-        .catch(err => console.log('lifafa join failed', err))
+        .catch()
     }
     return (
         <Flex flexGrow="1" justify="center">

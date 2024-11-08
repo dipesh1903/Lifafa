@@ -42,13 +42,9 @@ const router = createBrowserRouter(
                   },
                 ]
             },
-            // {
-            //   path: '/lifafa/create',
-            //   element: <LifafaPage/>
-            // },
             {
                 path: 'lifafa/:lifafaId',
-                element: <MemoComp><LifafaPage/></MemoComp>,
+                element: <LifafaPage/>,
                 children: [
                   {
                     path: 'ratna/:ratnaId/edit',
@@ -56,10 +52,6 @@ const router = createBrowserRouter(
                   }
                 ]
             },
-            // {
-            //     path: 'lifafa/list',
-            //     element: <LifafaListDrawer />
-            // },
             {
                 path: '/lifafa/:lifafaId/ratna/:ratnaId/edit',
                 element: ''

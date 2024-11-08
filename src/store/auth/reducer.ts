@@ -14,7 +14,7 @@ export const initialState: AuthInitialStateType = storePersist.get(LOCAL_STORAGE
 };
 
 export function AuthReducer(initState: AuthInitialStateType, action: AuthReduxAction): AuthInitialStateType {
-    console.log(action, action.payload);
+    
     switch(action.type) {
         case AuthActions.LOGIN:
             const loginDetails = {...initState,

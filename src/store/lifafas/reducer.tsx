@@ -34,7 +34,7 @@ export function lifafaReducer(lifafas: LifafaContextDataType, action: LifafaRedu
         }
 
         case LifafaActions.FETCH_ALL: {
-            console.log('coming from here', action , action.payload);
+            
             const { lifafa } = action.payload
             const result = {} as {[x: string]: {lifafa: LifafaFE , userAccess: {[y: string]: SharedUserFE}}};
             lifafa.forEach((item: LifafaFE) => result[item.id] = {lifafa: item, userAccess: {
@@ -46,7 +46,7 @@ export function lifafaReducer(lifafas: LifafaContextDataType, action: LifafaRedu
         }
 
         case LifafaActions.FETCH_SINGLE: {
-            console.log('fetching single lifafa action', lifafas);
+            
             const { lifafa, access } = action.payload
             const res: LifafaContextDataType  = {...lifafas, isFetching: false }
             res.data = {...res.data, [lifafa.id]: {
@@ -97,7 +97,7 @@ export function lifafaReducer(lifafas: LifafaContextDataType, action: LifafaRedu
         }
 
         case UserAccessActions.FETCH_SINGLE: {
-            console.log('fetching single lifafa action called here access action', lifafas);
+            
             const { lifafaId, users } = action.payload;
             return {
                 ...lifafas,
@@ -119,7 +119,7 @@ export function lifafaReducer(lifafas: LifafaContextDataType, action: LifafaRedu
         case UserAccessActions.FETCH_ALL: {
             const result = {} as {[x: string]: SharedUserFE};
             const { lifafaId, users }= action.payload;
-            console.log('the res is kjernf ' );
+            
             (users || []).forEach((item: SharedUserFE) => result[item.id] = item);
             return {
                 ...lifafas,

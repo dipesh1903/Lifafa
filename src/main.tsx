@@ -7,7 +7,7 @@ import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Theme>
+    <Theme className='flex justify-center bg-light-surface bg-opacity-50'>
       <App />
     </Theme>
   </StrictMode>,

@@ -32,7 +32,7 @@ const DrawerContent = React.forwardRef<
         ref={ref}
         className={cn("flex flex-col rounded-t-2xl bg-light-surfaceContainerLow",className)}
         {...props}>
-          <div className="mx-auto mt-2 h-1 w-[40px] rounded-full bg-light-onSurfaceVariant" />
+          <div className="mx-auto mt-2 h-2 w-[20%] rounded-full bg-light-onSurfaceVariant" />
           {children}
       </DrawerPrimitive.Content>
   </DrawerPortal>

@@ -24,7 +24,7 @@ export default function RatnaList({lifafaId, lifafaContext}: {lifafaId: string, 
                     dispatch(RatnaActionFactory.fetchAllRatnasCompleted(lifafaId, result))
                 }
             ).catch(err => {
-                console.log('error fetching ratnas', err)
+                
             })
         }
     }, [])

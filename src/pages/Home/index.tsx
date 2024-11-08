@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import { Outlet } from "react-router-dom";
 import { Flex } from "@radix-ui/themes";
 import SideBar from "../../components/Sidebar/desktop-sidebar";
-import HeaderHome from "../../components/Headers/headerHome";
 import useMobileLayout from "../../utils/hooks/useWindowDimension";
 import { useConfigDispatch } from "../../store/config/context";
 
@@ -20,7 +19,7 @@ export default function HomePage() {
     }, [dimension])
 
     return (
-        <Flex className="max-w-2xl min-h-dvh m-auto" ref={ref}>
+        <Flex className="max-w-2xl min-h-dvh flex-1" ref={ref}>
             <SideBar/>
             <Outlet/>
         </Flex>

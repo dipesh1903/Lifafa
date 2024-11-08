@@ -13,7 +13,7 @@ export async function CreateRatna(ratna: RatnaDoc, lifafaId: string): Promise<st
         const addRef = await addDoc(ref, ratna);
         return Promise.resolve(addRef.id);
     } catch(error) {
-        console.log(error);
+        
         return Promise.reject(handleError(error))
     }
 }
@@ -48,7 +48,7 @@ export async function getRatnas(lifafaId: string): Promise<RatnaFE[]> {
         })
         return Promise.resolve(result);
     } catch(err) {
-        console.log(err);
+        
         return Promise.reject(err);
     }
 }

@@ -15,7 +15,7 @@ export type ActionOrThunk<A extends Reducer<any, any>> =
 function isDispatchThunk<R extends Reducer<any, any>>(
   action: ReducerAction<R> | DispatchThunk<R>
 ): action is DispatchThunk<R> {
-  console.log('ation type called', action, typeof action === "function");
+  
   return typeof action === "function";
 }
 

@@ -1,5 +1,5 @@
 import { LockClosedIcon } from "@radix-ui/react-icons";
-import { Box, Flex } from "@radix-ui/themes";
+import { Flex } from "@radix-ui/themes";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { addUser } from "../api/api";
 import { useAuth } from "../store/auth/context";
@@ -27,7 +27,7 @@ export default function LifafaLocked({lifafa, onSuccess}: props) {
     const {register, handleSubmit, formState: { errors }} = useForm<formValues>();
 
     const onSubmit: SubmitHandler<formValues> = (data: FieldValues) => { 
-        console.log('password is ', data);
+        
         addUser(user.user.uid, lifafa.id, {
             accessType: LifafaAccessType.PROTECTED,
             name: user.user.displayName,
@@ -36,7 +36,7 @@ export default function LifafaLocked({lifafa, onSuccess}: props) {
         }).then(val => 
             dispatch(LifafaActionFactory.fetchSingleLifafaCompleted(lifafa, val))
         )
-        .catch(err => console.log('error after adding user', err))
+        .catch()
     }
     return (
         <Flex flexGrow="1" justify="center">

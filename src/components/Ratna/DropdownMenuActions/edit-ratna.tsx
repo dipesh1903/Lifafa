@@ -1,7 +1,7 @@
 import { Pencil1Icon } from "@radix-ui/react-icons";
 import { DropdownMenuItem } from "../../ui/Dropdown-menu";
 import { RatnaFE } from "../../../types/documentFETypes";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 type props = {

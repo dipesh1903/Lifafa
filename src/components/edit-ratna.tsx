@@ -45,8 +45,8 @@ function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string
                 description: data.ratnaDescription
             }, lifafaId, ratna.id).then(val => {
                 dispatch(RatnaActionFactory.updateRatnaCompleted(val, lifafaId, ratna.id))
-                console.log('updated ratna value is ', val)
-            }).catch(err => console.log('updated ratna error is ', err))
+                
+            }).catch()
             .finally(() => onClose())
         }
     

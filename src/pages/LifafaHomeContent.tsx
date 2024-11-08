@@ -5,8 +5,9 @@ import { LifafaActionFactory } from "../store/lifafas/actionCreator";
 import { useLifafa, useLifafaDispatch } from "../store/lifafas/context";
 import { Outlet, useNavigate } from "react-router-dom";
 import LifafaCard from "../components/LifafaCard";
-import HeaderHome from "../components/Headers/headerHome";
 import HeaderLifafaHome from "../components/Headers/headerLifafaHome";
+import { PrimaryButton } from "../components/ui/Button";
+import Loader from "../components/ui/loader";
 
 export default function LifafaHomeContent() {
     const user = useAuth();
@@ -14,20 +15,22 @@ export default function LifafaHomeContent() {
     const lifafas = useLifafa();
     const dispatch = useLifafaDispatch();
 
-    console.log('all lifafas fetched', lifafas);
+    
     const result = Object.values(lifafas.data || {});
 
     useEffect(() => {
         dispatch(LifafaActionFactory.fetchAllLifafa(user.user.uid));
     },[user.user.uid])
+
     return (
         <>
-            <Flex direction="column" className="w-full min-h-[100vh] ml-[60px]">
-                <Flex direction="column" justify="between" align="center" className="w-full bg-light-surfaceContainer">
+            <Flex direction="column" className="w-full flex-1 min-h-[100vh] ml-[60px]">
+                {lifafas.isFetching ? <Flex align="center" justify="center" flexGrow="1"><Loader /></Flex> : <>
+                <Flex direction="column" align="center" className="w-full bg-light-surfaceContainer flex-1">
                     <HeaderLifafaHome/>
-                    <Box className="border-y-[0.5px] mt-2 w-full bg-light-surface border-light-outlineVariant">
+                    <Box className="flex flex-col flex-1 justify-center border-y-[0.5px] w-full bg-light-surface border-light-outlineVariant">
                         {
-                            result.map(item => {
+                            result.length ? result.map(item => {
                                 return (
                                     <Box className="px-10 py-4 border-b-[0.5px] border-light-outlineVariant hover:bg-light-surfaceDim hover:cursor-pointer"
                                     key={item.lifafa.id}
@@ -36,10 +39,16 @@ export default function LifafaHomeContent() {
                                         lifafa={item.lifafa}/>
                                     </Box>
                                 )
-                            })
+                            }) : 
+                            <Flex direction="column" align="center" justify="center">
+                                <div>Create your first Lifafa</div>
+                                <PrimaryButton onClick={() => navigate('/lifafa/create')}>Create</PrimaryButton>
+                            </Flex>
                         }
                     </Box>
                 </Flex>
+                </>
+            }   
             </Flex>
             <Outlet/>
         </>

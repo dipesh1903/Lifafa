@@ -55,7 +55,7 @@ export function useLifafaDispatch(): DispatcherThunk<Reducer<LifafaContextDataTy
 export function useGetLifafaFromPath(): LifafaContextDataType {
     const lifafas = useLifafa();
     const { lifafaId }= useParams();
-    console.log('lifafa id is', lifafaId);
+    
     if (lifafaId) {
         return {
             ...lifafas,
@@ -76,7 +76,7 @@ export function useGetLifafaFromPath(): LifafaContextDataType {
 export function MemoComp(props: { children: any }) {
     const [count, setCount] = useState(0);
     const context = useGetLifafaFromPath();
-    console.log('memo lifafa context', context)
+    
     const ref = useRef<LifafaContextDataType>();
 
     useEffect(() => {

@@ -9,7 +9,7 @@ export function ConfigContextProvider({children}: {children: ReactNode}) {
     const [state , setState] = useState<configContextType>({} as configContextType);
 
     function setPos(val: DOMRect) {
-        console.log('the dimension is ', val);
+        
         setState(val);
     }
     return (

@@ -1,5 +1,5 @@
 
-import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
+import { TrashIcon } from "@radix-ui/react-icons";
 import { SyntheticEvent } from "react";
 import { RatnaFE } from "../../../types/documentFETypes";
 import { deleteRatna } from "../../../api/ratna";
@@ -18,7 +18,7 @@ export default function DeleteRatna({ratna, lifafaId}: props) {
         e.stopPropagation();
         deleteRatna(lifafaId, ratna.id).then(_ => {
             dispatch(RatnaActionFactory.deleteRatnaCompleted(lifafaId, ratna.id))
-        }).catch(err => console.log(err))
+        }).catch()
     }
     return (
         <DropdownMenuItem onClick={(e: SyntheticEvent) => {deleteRatnas(e)}}>

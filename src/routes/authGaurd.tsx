@@ -10,23 +10,23 @@ export const AuthGaurd = () => {
 
     // useEffect(() => {
     //     if(authUser && authUser.user.uid) {
-    //         console.log('logged in user')
+    //         
     //     } else {
-    //         console.log('not logegd in user')
+    //         
     //     }
     // }, [authUser])
-    console.log('authuser', authUser);
+    
     if (authUser && !authUser.isFirebaseAuthenticated) {
         return <div>Loading....</div>
     }
     else if(authUser && authUser.user.uid) {
         return <HomePage />;
     } else {
-        console.log('login page called')
+        
         return <Navigate to='/login'/>
     }
     // onAuthStateChanged(auth, (authUser) => {
-    //   console.log('auth state changes' , authUser);
+    //   
     //   if (authUser) {
     //     dispatch(AuthActionFactory.signIn(authUser));
     //     return <Outlet></Outlet>;

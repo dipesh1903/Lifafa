@@ -72,7 +72,7 @@ export function useGetRatnaFromPath(lifafaId: string): RatnaContextDataType {
 //     const context = useGetRatnaFromPath();
 
 //     const ref = useRef<RatnaContextDataType>();
-//     console.log('data here is context for', context, ref.current, count);
+//     
 
 //     useEffect(() => {
 //         if (!ref.current || !equal(ref.current.data, context.data)) {
@@ -80,7 +80,7 @@ export function useGetRatnaFromPath(lifafaId: string): RatnaContextDataType {
 //             setCount((prev) => prev + 1);
 //         }
 //     }, [context])
-//     console.log('the count is ', count)
+//     
 //     return useMemo(() => {
 //         const element = Children.map(props.children, (child) =>
 //             cloneElement(child, {

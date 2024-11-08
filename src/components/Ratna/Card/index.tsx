@@ -37,7 +37,7 @@ export default function RatnaCard({ratna, lifafaId}: props) {
     }
 
     function openContent(e: SyntheticEvent) {
-        console.log('clicked');
+        
         e.stopPropagation();
         if (!!isValidUrl(ratna.content)) {
             window.open(ratna.content, '_blank');

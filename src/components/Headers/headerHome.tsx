@@ -8,18 +8,18 @@ import { LifafaFE } from "../../types/documentFETypes";
 export default function HeaderHome({lifafa}: {lifafa: LifafaFE}) {
     const [open,setOpen] = useState<boolean>(false);
     return (
-        <Flex justify="between" align="center" className="w-full border-b-[1px] border-b-slate-100 p-4">
+        <Flex justify="between" align="center" className="w-full border-b-[1px] bg-light-surfaceContainer p-4">
             <HeaderInfo title={lifafa.name}/>
             <Flex gap="2" align="center">
                 <Button variant="soft" radius="full" onClick={() => setOpen(true)}>
                     <ChevronDownIcon /> Switch Lifafa
                 </Button>
-                <IconButton variant="ghost">
+                {/* <IconButton variant="ghost">
                     <UpdateIcon width="22"/>
                 </IconButton>
                 <IconButton variant="ghost">
                     <DropdownMenuIcon width="22"/>
-                </IconButton>
+                </IconButton> */}
             </Flex>
             {
                 open ? <LifafaListDrawer open={open} setOpen={setOpen} /> : null

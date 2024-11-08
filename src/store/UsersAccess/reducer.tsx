@@ -9,7 +9,7 @@ export const initialState: UserAccessContextDataType = {
 
 export function UserAccessReducer(users: UserAccessContextDataType, action: UserAccessReduxAction)
 : UserAccessContextDataType {
-    console.log('the action is rrf e', action);
+    
     switch(action.type) {
         case UserAccessActions.CREATE: {
             const [user, lifafaId] = (action.payload as unknown) as UserAccessCreate;
@@ -29,7 +29,7 @@ export function UserAccessReducer(users: UserAccessContextDataType, action: User
         case UserAccessActions.FETCH_ALL: {
             const [lifafaId, user] = (action.payload as unknown) as UserAccessFetch;
             const res = {} as {[x: string]: SharedUserFE};
-            console.log('the res is kjernf ', res , user);
+            
             (user || []).forEach((item: SharedUserFE) => res[item.id] = item);
             return {
                 ...users,

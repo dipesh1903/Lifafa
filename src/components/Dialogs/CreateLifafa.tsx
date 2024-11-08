@@ -41,7 +41,7 @@ export default function CreateLifafaDialog() {
     }
 
     const onSubmitErr: SubmitErrorHandler<formValues> = (data: FieldValues) => {
-        console.log(data);
+        
     }
 
     useEffect(() => {
@@ -66,7 +66,7 @@ export default function CreateLifafaDialog() {
                 createdBy: user.user.uid,
                 createdAt: Timestamp.fromDate(new Date())
             }, user.user.uid, password)
-            console.log('the lifafa is', lifafa);
+            
             navigate(`/lifafa/${lifafa.id}`, {
                 replace: true
             })
@@ -89,7 +89,7 @@ export default function CreateLifafaDialog() {
                 replace: true
             })
         } catch (err) {
-            console.log('error is', err);
+            
             navigate('..');
         }
     }
