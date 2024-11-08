@@ -82,3 +82,12 @@ export function isUserHasLifafaAccess(lifafa: LifafaFE, uid: string): boolean {
 export function isRatnaCreator(ratna: RatnaFE, uid: string): boolean {
   return !!(ratna.createdBy === uid);
 }
+
+export function getDisplayName(name: string): string {
+  if (!!name) {
+    const arr = name.trim().split(/\s+/)
+    return arr.map(item => item[0].toUpperCase()).join('')
+  } else {
+    return 'MR'
+  }
+}

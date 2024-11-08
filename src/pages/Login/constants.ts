@@ -1,5 +1,5 @@
 export const LOGIN = {
     "title": "Lifafa",
-    "message": "Create and share your shaguns",
+    "message": "Collaborate and share your favourite links...",
     "gmailBtnText": "Login with gmail"
 }

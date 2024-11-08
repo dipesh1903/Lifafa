@@ -13,7 +13,7 @@ type props = {
     onSuccess: () => void
 }
 
-export default function LifafaJoin({lifafa, onSuccess}: props) {
+export default function LifafaJoin({lifafa}: props) {
     const user = useAuth();
     const dispatch = useLifafaDispatch();
     function joinLifafa() {

@@ -21,7 +21,7 @@ type props = {
     onSuccess: () => void
 }
 
-export default function LifafaLocked({lifafa, onSuccess}: props) {
+export default function LifafaLocked({lifafa}: props) {
     const user = useAuth();
     const dispatch = useLifafaDispatch();
     const {register, handleSubmit, formState: { errors }} = useForm<formValues>();

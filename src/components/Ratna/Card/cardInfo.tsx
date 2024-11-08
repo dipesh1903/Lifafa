@@ -1,5 +1,5 @@
 import { Flex, Heading } from "@radix-ui/themes";
-import { RatnaFE, SharedUserFE } from "../../../types/documentFETypes";
+import { RatnaFE } from "../../../types/documentFETypes";
 import { isValidUrl } from "../../../utils";
 
 type props = {
@@ -20,6 +20,7 @@ export default function CardInfo({ratna}: props ) {
                 ratna.name && <Heading size="5">{ratna.name}</Heading>
             }
             <p className="max-h-60 font-semibold text-lg">{ratna.content}</p>
+            {ratna.description && <p className="max-h-60 pt-2">{ratna.description}</p> }
         </Flex>
     )
 }

@@ -28,7 +28,7 @@ export default function LifafaHomeContent() {
                 {lifafas.isFetching ? <Flex align="center" justify="center" flexGrow="1"><Loader /></Flex> : <>
                 <Flex direction="column" align="center" className="w-full bg-light-surfaceContainer flex-1">
                     <HeaderLifafaHome/>
-                    <Box className="flex flex-col flex-1 justify-center border-y-[0.5px] w-full bg-light-surface border-light-outlineVariant">
+                    <Flex className="flex flex-col flex-1 justify-center border-y-[0.5px] w-full bg-light-surface border-light-outlineVariant">
                         {
                             result.length ? result.map(item => {
                                 return (
@@ -40,12 +40,14 @@ export default function LifafaHomeContent() {
                                     </Box>
                                 )
                             }) : 
-                            <Flex direction="column" align="center" justify="center">
-                                <div>Create your first Lifafa</div>
-                                <PrimaryButton onClick={() => navigate('/lifafa/create')}>Create</PrimaryButton>
+                            <Flex justify="center">
+                                <Flex direction="column" align="center" justify="center" className="w-fit">
+                                    <div>Create your first Lifafa</div>
+                                    <PrimaryButton onClick={() => navigate('/lifafa/create')}>Create</PrimaryButton>
+                                </Flex>
                             </Flex>
                         }
-                    </Box>
+                    </Flex>
                 </Flex>
                 </>
             }   

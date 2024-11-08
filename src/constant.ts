@@ -27,3 +27,5 @@ export enum ApiStatus {
     SHOW_ADD_JOIN="SHOW_ADD_JOIN",
     SHOW_RATNAS="SHOW_RATNAS"
   }
+
+  export const Month = ["January","February","March","April","May","June","July","August","September","October","November","December"]

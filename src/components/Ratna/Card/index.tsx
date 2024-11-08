@@ -3,12 +3,13 @@ import { RatnaFE, SharedUserFE } from "../../../types/documentFETypes";
 import CardInfo from "./cardInfo";
 import RatnaMenuComponent from "../../DropdownMenus/ratna-menu";
 import { ReactNode, SyntheticEvent } from "react";
-import { isRatnaCreator, isValidUrl } from "../../../utils";
+import { getDisplayName, isRatnaCreator, isValidUrl } from "../../../utils";
 import { useAuth } from "../../../store/auth/context";
 import { DropdownMenuItem } from "../../ui/Dropdown-menu";
 import { CopyIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import DeleteRatna from "../DropdownMenuActions/delete-ratna";
 import EditRatnas from "../DropdownMenuActions/edit-ratna";
+import { Month } from "../../../constant";
 
 type props = {
     ratna: RatnaFE,
@@ -44,7 +45,15 @@ export default function RatnaCard({ratna, lifafaId}: props) {
         }
     }
     return (
-        <Flex direction="column" className="p-6 border-b-[1px] hover:bg-light-primaryContainer hover:bg-opacity-50 hover:cursor-pointer">
+        <Flex direction="row" className="hover:bg-light-primaryContainer hover:bg-opacity-50 hover:cursor-pointer">
+            <div className="flex-col justify-items-center pt-[10px]  text-sm font-semibold  text-light-outline px-6">
+                <p>{Month[ratna.createdAt.toDate().getMonth() - 1]}</p>
+                <p className="text-[12px]">{ratna.createdAt.toDate().getDate()}, {ratna.createdAt.toDate().getFullYear()}</p>
+            </div>
+            <div className="relative w-[1px] border-l border-b border-light-outlineVariant">
+                <div className="font-semibold absolute top-[10px] text-light-onPrimary bg-light-primary left-[-15px] text-xs border-2 rounded-full border-light-outlineVariant p-[4px]">{getDisplayName(ratna.creatorName)}</div>
+            </div>
+            <Flex direction="column" flexGrow="1" className="p-6 pt-[12px] border-b-[1px] ">
             <Flex justify="between"
                 className=""
                 onClick={(e: SyntheticEvent) => openContent(e)}>
@@ -55,13 +64,6 @@ export default function RatnaCard({ratna, lifafaId}: props) {
                     }
                 </RatnaMenuComponent>
             </Flex>
-            <Flex justify="end" className="pt-4">
-                {ratna.description && <p className="bg-light-tertiary text-light-inverseOnSurface max-h-60 pt-2 flex w-[50%] border-light-outline rounded-lg mr-4 p-4 ">{ratna.description}</p> }
-                <div className={` text-light-onSurface rounded-lg w-[50%]  bg-light-tertiaryContainer p-4` }>
-                    <div className="italic">From</div>
-                    <div className="italic font-semibold">{ratna.creatorName}</div>
-                    <p className="p-0 pt-1 font-semibold">{ratna.createdAt.toDate().toLocaleDateString()}</p>
-                </div>
             </Flex>
         </Flex>
     )

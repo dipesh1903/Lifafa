@@ -80,7 +80,7 @@ export default function LifafaPage() {
                 replace: true
             })})
             setIsLoading(pageStatus.LOADING);
-        } else if (!isLoading && lifafaId && lifafaData[lifafaId]) {
+        } else if (lifafaId && lifafaData[lifafaId]) {
             currPageLifafa.current = lifafaData[lifafaId].lifafa;
             handleLifafaScreen(lifafaData[lifafaId].lifafa, lifafaData[lifafaId]?.userAccess?.[uid], uid);
             setIsLoading(pageStatus.COMPLETED);
