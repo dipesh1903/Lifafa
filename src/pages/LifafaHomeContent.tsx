@@ -42,7 +42,7 @@ export default function LifafaHomeContent() {
                             }) : 
                             <Flex justify="center">
                                 <Flex direction="column" align="center" justify="center" className="w-fit">
-                                    <div>Create your first Lifafa</div>
+                                    <div className="text-[24px] pb-2">Create your first Lifafa</div>
                                     <PrimaryButton onClick={() => navigate('/lifafa/create')}>Create</PrimaryButton>
                                 </Flex>
                             </Flex>

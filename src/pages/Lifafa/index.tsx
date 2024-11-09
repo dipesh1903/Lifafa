@@ -15,6 +15,7 @@ import LifafaJoin from "../../components/lifafa-join";
 import RatnaList from "../../components/Ratna/ratna-list";
 import Loader from "../../components/ui/loader";
 import HeaderHome from "../../components/Headers/headerHome";
+import RatnaFilters from "../../components/ratna-filters";
 
 export default function LifafaPage() {
     const navigate = useNavigate();
@@ -29,6 +30,7 @@ export default function LifafaPage() {
     const currPageLifafa = useRef<LifafaFE>();
     const [lifafa, setLifafa] = useState<LifafaFE>({} as LifafaFE);
     const lifafaContext = useLifafa();
+
 
     const {
         uid
@@ -112,6 +114,7 @@ export default function LifafaPage() {
                                     !!isUserHasProtectedAccess(lifafaContext?.data[lifafaId]?.lifafa, uid))  &&
                                         <CreateRatnaInput lifafaId={lifafaId || ''} /> }
                                 </Box>
+                                <RatnaFilters />
                                 <Box className="bg-light-surface ">
                                     <RatnaList lifafaId={lifafaId || ''}/>
                                 </Box>

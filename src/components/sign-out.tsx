@@ -17,7 +17,6 @@ export default function SignOut() {
                 replace: true
             })
         } catch (err) {
-            console.log(err);
         }
     }
 

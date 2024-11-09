@@ -55,7 +55,7 @@ export default function PopoverDemo({ratna}: props) {
         if (!lifafaId) return;
         updateLifafa({
             updatedAt: Timestamp.fromDate(new Date()),
-            tags: [...lifafa.data[lifafaId]?.lifafa.tags, search]
+            tags: [...lifafa.data[lifafaId]?.lifafa.tags, search.trim()]
         }, lifafaId, user.user.uid).then(res => {
             dispatch(LifafaActionFactory.updateLifafaCompleted(res.lifafa, res.lifafaId))
             setTags([...lifafa.data[lifafaId]?.lifafa.tags, search])

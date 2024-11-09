@@ -2,7 +2,7 @@ import { Flex } from "@radix-ui/themes";
 import { RatnaFE, SharedUserFE } from "../../../types/documentFETypes";
 import CardInfo from "./cardInfo";
 import RatnaMenuComponent from "../../DropdownMenus/ratna-menu";
-import { ReactNode, SyntheticEvent } from "react";
+import { ReactNode, SyntheticEvent, useState } from "react";
 import { getDisplayName, isRatnaCreator, isValidUrl } from "../../../utils";
 import { useAuth } from "../../../store/auth/context";
 import { DropdownMenuItem } from "../../ui/Dropdown-menu";
@@ -10,7 +10,7 @@ import { CopyIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import DeleteRatna from "../DropdownMenuActions/delete-ratna";
 import EditRatnas from "../DropdownMenuActions/edit-ratna";
 import { Month } from "../../../constant";
-import PopoverDemo from "../../tag-popover";
+import EditRatna from "../../edit-ratna";
 
 type props = {
     ratna: RatnaFE,
@@ -20,6 +20,7 @@ type props = {
 
 export default function RatnaCard({ratna, lifafaId}: props) {
     const user = useAuth();
+    const [open , setOpen] = useState(false);
     const menuItems: ReactNode[] = [
         <DropdownMenuItem>
             <InfoCircledIcon className="pr-2 size-6"/> Info
@@ -33,7 +34,7 @@ export default function RatnaCard({ratna, lifafaId}: props) {
     ];
     if (!!isRatnaCreator(ratna, user.user.uid)) {
         menuItems.push(...[
-            <EditRatnas ratna={ratna} />,
+            <EditRatnas ratna={ratna} setOpen={setOpen} />,
             <DeleteRatna ratna={ratna} lifafaId={lifafaId}/>
         ])
     }
@@ -65,6 +66,9 @@ export default function RatnaCard({ratna, lifafaId}: props) {
                     </RatnaMenuComponent>
                 </Flex>
             </Flex>
+            {
+                open ? <EditRatna ratna={ratna} open={open} setOpen={setOpen} /> : null
+            }
         </Flex>
     )
 }

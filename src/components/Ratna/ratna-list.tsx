@@ -6,6 +6,7 @@ import { RatnaFE, SharedUserFE } from "../../types/documentFETypes";
 import RatnaCard from "./Card";
 import { getRatnas } from "../../api/ratna";
 import { RatnaActionFactory } from "../../store/ratnas/actionCreator";
+import { useSearchParams } from "react-router-dom";
 
 export default function RatnaList({lifafaId, lifafaContext}: {lifafaId: string, lifafaContext?: LifafaContextDataType}) {
     const ratnaContext = useGetRatnaFromPath(lifafaId);
@@ -13,8 +14,15 @@ export default function RatnaList({lifafaId, lifafaContext}: {lifafaId: string, 
     const dispatch = useRatnaDispatch();
     const access = lifafaContext?.data[lifafaId].userAccess[user.user.uid] || {} as SharedUserFE;
     let ratnas: RatnaFE[] = [];
+    const [searchParams] = useSearchParams();
+
     if (ratnaContext.data && lifafaId) {
         ratnas = Object.values(ratnaContext.data[lifafaId]).map(item => item);
+        const query = searchParams.get('tags')
+        if (query?.length) {
+            let queryTags = [...query.split(',')];
+            ratnas = ratnas.filter(item => !!queryTags.some(i => (item.tags || []).includes(i)));
+        }
     }
 
     useEffect(() => {
@@ -30,7 +38,7 @@ export default function RatnaList({lifafaId, lifafaContext}: {lifafaId: string, 
     return (
             ratnas && ratnas.map(item => {
                 return (
-                    <RatnaCard key={item.id} lifafaId={lifafaId} ratna={item} access={access}/>
+                        <RatnaCard key={item.id} lifafaId={lifafaId} ratna={item} access={access}/>
                 )
             })
     )
