@@ -90,7 +90,7 @@ export default function LifafaPage() {
     }, [location])
 
     return (
-            <Box ref={ref} className="flex flex-1">
+            <Box ref={ref} className="flex flex-1 ">
                 { !isLoading || isLoading === pageStatus.LOADING ?
                 <Flex align="center" justify="center" flexGrow="1">
                     <Loader />
@@ -104,9 +104,9 @@ export default function LifafaPage() {
                             onSuccess={() => setScreenType(LifafaAccessScreen.SHOW_RATNAS)} 
                             lifafa={lifafa}/> :
                 <>
-                    <Flex direction="column" justify="between" align="center" className="w-full max-sm:mb-[60px] md:max-2xl:ml-[60px]">
+                    <Flex direction="column" justify="between" align="center" className="w-full max-sm:mb-[60px] border-light-outlineVariant border-2 md:max-2xl:ml-[60px]">
                         <HeaderHome lifafa={lifafaId && lifafaContext?.data[lifafaId]?.lifafa || {} as LifafaFE}/>
-                        <Flex className="max-w-2xl min-h-dvh flex-1 w-full border-x-[0.5px] border-light-outlineVariant">
+                        <Flex className="max-w-2xl min-h-dvh flex-1 w-full ">
                             <Box className="w-full min-h-[100vh]">
                                 <Box className="py-4  bg-light-primaryFixedDim bg-opacity-10  px-4 border-light-outline border-b-2">
                                     {lifafaId && lifafaContext?.data[lifafaId]?.lifafa &&

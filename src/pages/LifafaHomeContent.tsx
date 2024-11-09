@@ -26,7 +26,7 @@ export default function LifafaHomeContent() {
         <>
             <Flex direction="column" className="w-full flex-1 min-h-[100vh] max-sm:mb-[60px] md:max-2xl:ml-[60px]">
                 {lifafas.isFetching ? <Flex align="center" justify="center" flexGrow="1"><Loader /></Flex> : <>
-                <Flex direction="column" align="center" className="w-full bg-light-surfaceContainer flex-1">
+                <Flex direction="column" align="center" className="border-light-outlineVariant border-x-2 w-full bg-light-surfaceContainer flex-1">
                     <HeaderLifafaHome/>
                     <Flex className={`flex flex-col flex-1 border-y-[0.5px] w-full bg-light-surface border-light-outlineVariant ${!result.length ? 'justify-center' : ''}`}>
                         {
