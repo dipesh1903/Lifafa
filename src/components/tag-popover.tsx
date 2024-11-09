@@ -24,7 +24,7 @@ type props = {
     ratna: RatnaFE,
 }
 
-export default function PopoverDemo({ratna}: props) {
+export default function TagsDropdown({ratna}: props) {
 
     const [popoverOpen , setPopoverOpen] = useState<boolean>(false);
 

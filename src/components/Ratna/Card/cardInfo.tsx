@@ -1,7 +1,7 @@
 import { Flex, Heading } from "@radix-ui/themes";
 import { RatnaFE } from "../../../types/documentFETypes";
 import { isValidUrl } from "../../../utils";
-import PopoverDemo from "../../tag-popover";
+import TagsDropdown from "../../tag-popover";
 import TagList from "../../tags-list";
 import { useSearchParams } from "react-router-dom";
 
@@ -39,7 +39,7 @@ export default function CardInfo({ratna}: props ) {
             {ratna.description && <p className="max-h-60 pt-2">{ratna.description}</p> }
             <Flex align="center" className="flex mt-4">
                 <div className="mt-2 mr-2">
-                    <PopoverDemo ratna={ratna}/>
+                    <TagsDropdown ratna={ratna}/>
                 </div>
                 {
                     ratna.tags && ratna.tags.length && <TagList tags={ratna.tags} onClick={updateTag}/>

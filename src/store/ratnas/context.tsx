@@ -1,11 +1,8 @@
-import { createContext, ReactNode, Reducer, useContext, useEffect, useRef, useState } from "react";
+import { createContext, ReactNode, Reducer, useContext } from "react";
 import { initialState, RatnaReducer } from "./reducer";
 import { RatnaFE } from "../../types/documentFETypes";
 import { RatnaReduxAction } from "./actionCreator";
 import { DispatcherThunk, useThunkReducer } from "../../utils/hooks/useReducerThunk";
-import { useParams } from "react-router-dom";
-import equal from "deep-equal";
-
 export type RatnaContextDataType = {
     data: {
         [x: string]: {

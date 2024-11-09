@@ -1,14 +1,12 @@
 import { Flex } from "@radix-ui/themes";
 import { LifafaFE } from "../../types/documentFETypes";
 import CardInfo from "./CardInfo";
-import LifafaMenuComponent from "../DropdownMenus/lifafa-menu";
 import LifafaCardActions from "./actions";
 import DeleteLifafa from "./DropdownMenuActions/delete-lifafa";
 import { useAuth } from "../../store/auth/context";
 import { isLifafaOwner, isUserHasProtectedAccess, isUserHasPublicAccess } from "../../utils";
 import { ReactNode } from "react";
 import LeaveLifafa from "./DropdownMenuActions/leave-lifafa";
-import PopoverDemo from "../tag-popover";
 
 type props = {
     lifafa: LifafaFE
