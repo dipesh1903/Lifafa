@@ -8,6 +8,7 @@ import { handleError } from "../utils/handleError";
 import { convertLifafaToFE, convertSharedUserToFE } from "../utils/firebaseToFEConverter";
 import { getCurrentUserLifafaAccess } from "./ratna";
 import { LifafaAccessType } from "../constant";
+import { toast } from "react-toastify";
 
 export async function fetchLifafa(lifafaId: string, uid: string): Promise<{lifafa: LifafaFE, access: SharedUserFE} | null> {
     let lifafa = null;
@@ -74,12 +75,13 @@ export async function updateLifafa(lifafa: LifafaDocUpdate, lifafaId: string, ui
             batch.delete(addPrivate);
         }
         await batch.commit();
+        toast.success('Updated Successfully!!')
         return Promise.resolve({
             lifafa,
             lifafaId
         });
     } catch(error) {
-        
+        toast.error('Failed!!')
         return Promise.reject(handleError(error));
     }
 }
@@ -103,9 +105,10 @@ export async function createLifafa(lifafa: LifafaDoc, uid: string, password?: st
             )
         }
         await batch.commit();
+        toast.success('Created Successfully!!')
         return Promise.resolve(convertLifafaToFE(lifafaId, lifafa));
     } catch(error) {
-        
+        toast.error('Failed!!')
         return Promise.reject(handleError(error));
     }
 }
@@ -124,9 +127,10 @@ export async function addUser(uid: string , lifafaId: string, user: SharedUserDo
             sharedUserId: arrayUnion(uid)
         })
         await batch.commit();
+        toast.success('Joined Successfully!!')
         return Promise.resolve(convertSharedUserToFE(uid, user));
     } catch (error) {
-        
+        toast.error('Failed!!')
         return Promise.reject(handleError(error));
     }
 }
@@ -141,7 +145,6 @@ export async function getAllLifafa(uid: string): Promise<LifafaFE[]> {
         });
         return Promise.resolve(result);
     } catch (error) {
-        
         return Promise.reject(handleError(error));
     }
 }
@@ -170,7 +173,6 @@ export async function getLifafaPassword(lifafaId: string, uid: string): Promise<
             return Promise.resolve('')
         }
     } catch(error) {
-        
         return Promise.reject(error);
     }
 }
@@ -189,7 +191,6 @@ export async function deleteLifafa(lifafaId: string, uid: string) {
         const snapShot = await getDocs(q);
         snapShot.forEach(async item => {
             try {
-                
                 await deleteDoc(doc(db, COLLECTIONS.LIFAFA.index, lifafaId, COLLECTIONS.LIFAFA.sharedUsers, item.id))
             } catch (error) {
                 
@@ -197,8 +198,9 @@ export async function deleteLifafa(lifafaId: string, uid: string) {
         })
         await deleteDoc(doc(db, COLLECTIONS.LIFAFA.index, lifafaId, COLLECTIONS.LIFAFA.private, uid))
         await deleteDoc(doc(db, COLLECTIONS.LIFAFA.index, lifafaId));
+        toast.success('Deleted Successfully!!')
     } catch (error) {
-        
+        toast.error('Failed!!')
     }
 }
 
@@ -216,9 +218,10 @@ export async function joinPublicLifafa(lifafaId: string, uid: string, access: Sh
             publicJoinedUserId: arrayUnion(uid)
         })
         await batch.commit();
+        toast.success('Joined Successfully!!')
         return Promise.resolve(convertSharedUserToFE(uid, access));
     } catch (err) {
-        
+        toast.error('Failed!!')
         return Promise.reject(err);
     }
 }
@@ -234,9 +237,10 @@ export async function leavePublicLifafa(lifafaId: string, uid: string): Promise<
         const docRef = doc(db, COLLECTIONS.LIFAFA.index, lifafaId, COLLECTIONS.LIFAFA.sharedUsers, uid);
         batch.delete(docRef);
         await batch.commit();
+        toast.success('Left Successfully!!')
         return Promise.resolve(lifafaId);
     } catch (err) {
-        
+        toast.error('Failed!!')
         return Promise.reject(err);
     }
 }
@@ -252,9 +256,10 @@ export async function leaveProtectedLifafa(uid: string , lifafaId: string): Prom
         const addShared = doc(db, COLLECTIONS.LIFAFA.index, lifafaId , COLLECTIONS.LIFAFA.sharedUsers, uid);
         batch.delete(addShared);
         await batch.commit();
+        toast.success('Left Successfully!!')
         return Promise.resolve(lifafaId);
     } catch (error) {
-        
+        toast.error('Failed!!')
         return Promise.reject(handleError(error));
     }
 }

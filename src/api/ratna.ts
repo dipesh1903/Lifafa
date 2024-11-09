@@ -6,14 +6,16 @@ import { RatnaFE, SharedUserFE } from "../types/documentFETypes";
 import { convertRatnaToFE } from "../utils/firebaseToFEConverter";
 import { ApiStatus } from "../constant";
 import { handleError } from "../utils/handleError";
+import { toast } from "react-toastify";
 
 export async function CreateRatna(ratna: RatnaDoc, lifafaId: string): Promise<RatnaFE> {
     try {
         const ref = collection(db, COLLECTIONS.LIFAFA.index, lifafaId, COLLECTIONS.LIFAFA.ratna)
         const addRef = await addDoc(ref, ratna);
+        toast.success('Created Successfully !!')
         return Promise.resolve(convertRatnaToFE(addRef.id, ratna));
     } catch(error) {
-        
+        toast.error('Failed!!')
         return Promise.reject(handleError(error))
     }
 }
@@ -22,8 +24,10 @@ export async function updateRatna(ratna: RatnaDocUpdate, lifafaId: string, ratna
     try {
         const ref = doc(db, COLLECTIONS.LIFAFA.index, lifafaId, COLLECTIONS.LIFAFA.ratna, ratnaId)
         await updateDoc(ref, {...ratna});
+        toast.success('Updated Successfully !!')
         return Promise.resolve(ratna);
     } catch(error) {
+        toast.error('Failed!!')
         return Promise.reject(handleError(error))
     }
 }
@@ -32,8 +36,10 @@ export async function deleteRatna(lifafaId: string, ratnaId: string): Promise<Ap
     try {
         const ref = doc(db, COLLECTIONS.LIFAFA.index, lifafaId, COLLECTIONS.LIFAFA.ratna, ratnaId)
         await deleteDoc(ref);
+        toast.success('Deleted Successfully !!')
         return Promise.resolve(ApiStatus.SUCCESS);
     } catch(error) {
+        toast.error('Failed!!')
         return Promise.reject(handleError(error))
     }
 }

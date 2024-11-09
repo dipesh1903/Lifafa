@@ -17,16 +17,18 @@ export default function CreateLifafaForm() {
     const drawerPos = useConfig();
     const location = useLocation();
 
-    function onDialogClose() {
+    function onDialogClose(navigateBack: boolean) {
         setOpen(false);
         setTimeout(() => {
             document.body.style.pointerEvents = "auto";
+            if (!!navigateBack)
             navigate('..');
         })
     }
 
-    function onDrawerClose() {
+    function onDrawerClose(navigateBack: boolean) {
         setOpen(false);
+        if (!!navigateBack)
         navigate('..');
         setTimeout(() => {
             document.body.style.pointerEvents = "auto";

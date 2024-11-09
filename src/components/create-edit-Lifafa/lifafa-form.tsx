@@ -18,7 +18,7 @@ type formValues = {
     protectedPassword: string
   }
 
-export default function Form({onClose}: {onClose: () => void}) {
+export default function Form({onClose}: {onClose: (navigateBack: boolean) => void}) {
     const navigate = useNavigate();
     const location = useLocation();
     const { lifafaId }= useParams();
@@ -62,14 +62,13 @@ export default function Form({onClose}: {onClose: () => void}) {
                 createdBy: user.user.uid,
                 createdAt: Timestamp.fromDate(new Date())
             }, user.user.uid, password)
-            
             navigate(`/lifafa/${lifafa.id}`, {
                 replace: true
             })
         } catch (err) {
             navigate('..');
         } finally {
-            onClose();
+            onClose(false);
         }
     }
 
@@ -89,7 +88,7 @@ export default function Form({onClose}: {onClose: () => void}) {
         } catch (err) {
             navigate('..');
         } finally {
-            onClose()
+            onClose(true)
         }
     }
 
