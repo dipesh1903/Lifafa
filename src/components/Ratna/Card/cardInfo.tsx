@@ -42,7 +42,7 @@ export default function CardInfo({ratna}: props ) {
                     <TagsDropdown ratna={ratna}/>
                 </div>
                 {
-                    ratna.tags && ratna.tags.length && <TagList tags={ratna.tags} onClick={updateTag}/>
+                    ratna.tags && ratna.tags.length ? <TagList tags={ratna.tags} onClick={updateTag}/> : null
                 }
             </Flex>
         </Flex>

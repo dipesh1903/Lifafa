@@ -13,7 +13,7 @@ import { isLifafaOwner, isPasswordMatching, isUserHasLifafaAccess, isUserHasProt
 import LifafaLocked from "../../components/lifafa-lock";
 import LifafaJoin from "../../components/lifafa-join";
 import RatnaList from "../../components/Ratna/ratna-list";
-import Loader from "../../components/ui/loader";
+import Loader from "../../components/Loaders/loader";
 import HeaderHome from "../../components/Headers/headerHome";
 import RatnaFilters from "../../components/ratna-filters";
 
@@ -90,11 +90,11 @@ export default function LifafaPage() {
     }, [location])
 
     return (
-            <Box ref={ref} className="flex flex-1 ">
+            <Box ref={ref} className="flex flex-1 w-full min-h-[100vh] max-sm:mb-[60px] md:max-2xl:ml-[60px]">
                 { !isLoading || isLoading === pageStatus.LOADING ?
-                <Flex align="center" justify="center" flexGrow="1">
+                <Box className="w-full">
                     <Loader />
-                </Flex> :
+                </Box> :
                 screenType === LifafaAccessScreen.SHOW_PASSWORD ? 
                     <LifafaLocked 
                     onSuccess={() => setScreenType(LifafaAccessScreen.SHOW_RATNAS)}
@@ -104,7 +104,7 @@ export default function LifafaPage() {
                             onSuccess={() => setScreenType(LifafaAccessScreen.SHOW_RATNAS)} 
                             lifafa={lifafa}/> :
                 <>
-                    <Flex direction="column" justify="between" align="center" className="w-full max-sm:mb-[60px] border-light-outlineVariant border-2 md:max-2xl:ml-[60px]">
+                    <Flex direction="column" justify="between" align="center" className="w-full  border-light-outlineVariant border-2 ">
                         <HeaderHome lifafa={lifafaId && lifafaContext?.data[lifafaId]?.lifafa || {} as LifafaFE}/>
                         <Flex className="max-w-2xl min-h-dvh flex-1 w-full ">
                             <Box className="w-full min-h-[100vh]">

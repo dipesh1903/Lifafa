@@ -75,7 +75,7 @@ export default function TagsDropdown({ratna}: props) {
         if (lifafaId) {
             updateRatna({
                 updatedAt: Timestamp.fromDate(new Date()),
-                tags: [...(ratna.tags || []), ...getValues().checkbox]
+                tags: [...getValues().checkbox]
             }, lifafaId, ratna.id).then(res => {
                 ratnaDispatch(RatnaActionFactory.updateRatnaCompleted(res, lifafaId, ratna.id))
             }).catch()
@@ -117,7 +117,7 @@ export default function TagsDropdown({ratna}: props) {
                                 onClick={addToList}>+ create</PrimaryButton>
                         </div>
                     }
-                    {(watchAllFields && getValues().checkbox.length && tags.length) ? <PrimaryButton className="mt-2" onClick={saveTags}>Save</PrimaryButton> : null }
+                    {(watchAllFields && tags.length) ? <PrimaryButton className="mt-2" onClick={saveTags}>Save</PrimaryButton> : null }
                     <Popover.Arrow className="fill-white" />
                 </Popover.Content>
             </Popover.Portal>

@@ -58,7 +58,7 @@ export default function LifafaListDrawer({setOpen , open}: props) {
                         {
                             result.map(item => {
                                 return (
-                                    <Box className="px-10 py-4 border-b-[0.5px] border-light-outlineVariant hover:bg-light-surfaceDim hover:cursor-pointer"
+                                    <Box className="px-6 py-4 border-b-[0.5px] border-light-outlineVariant hover:bg-light-surfaceDim hover:cursor-pointer"
                                     key={item.lifafa.id}
                                     onClick={() => {onOpenChange(false); navigate(`/lifafa/${item.lifafa.id}`)}}>
                                         <LifafaCard 

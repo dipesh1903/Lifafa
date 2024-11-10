@@ -4,7 +4,7 @@ import App from './App.tsx'
 import './config/firebase.config.ts'
 import { Theme } from '@radix-ui/themes';
 import './index.css';
-import { ToastContainer, Bounce } from 'react-toastify';
+import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 createRoot(document.getElementById('root')!).render(
@@ -23,7 +23,7 @@ createRoot(document.getElementById('root')!).render(
       draggable
       pauseOnHover
       theme="dark"
-      transition={Bounce}
+      transition={Slide}
       />
   </StrictMode>
 )
