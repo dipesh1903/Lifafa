@@ -1,4 +1,4 @@
-import { and, arrayRemove, arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, or, query, setDoc, Timestamp, updateDoc, where, writeBatch } from "firebase/firestore";
+import { and, arrayRemove, arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, or, query, setDoc, Timestamp, where, writeBatch } from "firebase/firestore";
 import { COLLECTIONS } from "../config/firebaseCollection";
 import { db } from "../config/firebase.config";
 import IdGenerator from "../utils/generateId";

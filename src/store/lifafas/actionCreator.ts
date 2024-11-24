@@ -52,7 +52,7 @@ export const LifafaActionFactory = {
     },
 
     createLifafa: (payload: LifafaDoc, uid: string) => {
-        return async function(dispatch: Dispatch<LifafaReduxAction> , getState: state) {
+        return async function(dispatch: Dispatch<LifafaReduxAction>) {
             try {
                 dispatch(LifafaActionFactory.lifafaActionStarted());
                 const result = await createLifafa(payload, uid);
@@ -64,7 +64,7 @@ export const LifafaActionFactory = {
     },
 
     updateLifafa: (payload: {update: LifafaDocUpdate, lifafaId: string}) => {
-        return async function(dispatch: Dispatch<LifafaReduxAction>, getState: state) {
+        return async function(dispatch: Dispatch<LifafaReduxAction>) {
             try {
                 dispatch(LifafaActionFactory.lifafaActionStarted());
                 const result = await updateLifafa(payload.update, payload.lifafaId, '');

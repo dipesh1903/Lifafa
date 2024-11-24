@@ -1,5 +1,5 @@
-import { ReducerAction, SharedUserFE } from "../../types/documentFETypes";
-import { UserAccessActions, UserAccessCreate, UserAccessFetch, UserAccessPayloadType, UserAccessReduxAction } from "./actionCreator";
+import { SharedUserFE } from "../../types/documentFETypes";
+import { UserAccessActions, UserAccessCreate, UserAccessFetch, UserAccessReduxAction } from "./actionCreator";
 import { UserAccessContextDataType } from "./context";
 
 export const initialState: UserAccessContextDataType = {

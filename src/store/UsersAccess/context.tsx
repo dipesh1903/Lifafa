@@ -1,8 +1,7 @@
-import { createContext, ReactNode, Reducer, useContext, useReducer } from "react";
+import { createContext, ReactNode } from "react";
 import { initialState, UserAccessReducer } from "./reducer";
 import { SharedUserFE } from "../../types/documentFETypes";
-import { UserAccessReduxAction } from "./actionCreator";
-import { DispatcherThunk, useThunkReducer } from "../../utils/hooks/useReducerThunk";
+import { useThunkReducer } from "../../utils/hooks/useReducerThunk";
 
 export type UserAccessContextDataType = {
     data: {
@@ -32,15 +31,3 @@ export const UserAccessProvider = (props: UserAccessContextProps) => {
         </UserAccessContext.Provider>
     )
 }
-
-// // eslint-disable-next-line react-refresh/only-export-components
-// export function useUserAccess(): UserAccessContextDataType {
-//     const context = useContext(UserAccessContext);
-//     return context as UserAccessContextDataType;
-//   }
-  
-// // eslint-disable-next-line react-refresh/only-export-components
-// export function useUserAccessDispatch(): DispatcherThunk<Reducer<UserAccessContextDataType, UserAccessReduxAction>>  {
-// const context = useContext(UserAccessContextDispatch);
-// return context as DispatcherThunk<Reducer<UserAccessContextDataType, UserAccessReduxAction>>;
-// }

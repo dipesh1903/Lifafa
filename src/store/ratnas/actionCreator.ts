@@ -1,7 +1,7 @@
 import { Dispatch } from "react"
-import { RatnaDoc, RatnaDocUpdate } from "../../types/firebaseDocument"
+import { RatnaDocUpdate } from "../../types/firebaseDocument"
 import { RatnaFE } from "../../types/documentFETypes"
-import { CreateRatna, deleteRatna, getRatnas, updateRatna } from "../../api/ratna"
+import { deleteRatna, getRatnas, updateRatna } from "../../api/ratna"
 
 export const RatnaActions = {
     FETCH_ALL: 'ratna/fetch_all' as const,
@@ -28,18 +28,6 @@ export const RatnaActionFactory = {
             lifafaId
         }
     }),
-
-    createRatna: (ratnaDoc: RatnaDoc, lifafaId: string) => {
-        return async function(dispatch: Dispatch<RatnaReduxAction>) {
-            try {
-                dispatch(RatnaActionFactory.actionStarted());
-                const result = await CreateRatna(ratnaDoc, lifafaId);
-                dispatch(RatnaActionFactory.createActionCompleted({...ratnaDoc , id: result} as RatnaFE , lifafaId));
-            } catch (error) {
-                dispatch(RatnaActionFactory.actionFailed());
-            }
-        }
-    },
 
     fetchAllRatnasCompleted: (lifafaId: string, ratnas: RatnaFE[]) => ({
         type: RatnaActions.FETCH_ALL,

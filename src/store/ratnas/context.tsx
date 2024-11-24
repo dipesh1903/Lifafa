@@ -64,28 +64,3 @@ export function useGetRatnaFromPath(lifafaId: string): RatnaContextDataType {
     }
 }
 
-// export function MemoComp(props: { children: any }) {
-//     const [count, setCount] = useState(0);
-//     const context = useGetRatnaFromPath();
-
-//     const ref = useRef<RatnaContextDataType>();
-//     
-
-//     useEffect(() => {
-//         if (!ref.current || !equal(ref.current.data, context.data)) {
-//             ref.current = {...context }
-//             setCount((prev) => prev + 1);
-//         }
-//     }, [context])
-//     
-//     return useMemo(() => {
-//         const element = Children.map(props.children, (child) =>
-//             cloneElement(child, {
-//                 lifafaContext: context
-//             }));
-//         return (
-//             <>{element}</>
-//         )
-//     }, [count])
-// }
-

@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { LifafaContextDataType, LifafaDataType } from '../store/lifafas/context';
-import { LifafaAccessType, UserLifafaAccess } from '../constant';
+import { LifafaDataType } from '../store/lifafas/context';
+import { LifafaAccessType } from '../constant';
 import { LifafaFE, RatnaFE, SharedUserFE } from '../types/documentFETypes';
 
 export function cn(...inputs: ClassValue[]) {
@@ -67,12 +67,12 @@ export function isUserHasPrivateAccess(lifafa: LifafaFE, uid: string): boolean {
   return !!(accessType === LifafaAccessType.PRIVATE && isLifafaOwner(lifafa, uid))
 }
 
-export function isPasswordMatching(lifafa: LifafaFE, access: SharedUserFE): boolean {
+export function isPasswordMatching(access: SharedUserFE): boolean {
   return !!(access && access.password)
 }
 
 export function isProtectedLifafaPasswordChanged(lifafa: LifafaFE, access: SharedUserFE): boolean {
-  return !!(!isPasswordMatching(lifafa, access) && lifafa.sharedUserId.includes(access.id));
+  return !!(!isPasswordMatching(access) && lifafa.sharedUserId.includes(access.id));
 }
 
 export function isUserHasLifafaAccess(lifafa: LifafaFE, uid: string): boolean {

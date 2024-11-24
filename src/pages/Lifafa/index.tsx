@@ -42,7 +42,7 @@ export default function LifafaPage() {
         } else if (lifafa?.accessType === LifafaAccessType.PUBLIC && !isUserHasPublicAccess(lifafa, uid)) {
             setScreenType(LifafaAccessScreen.SHOW_ADD_JOIN)
         } else if (lifafa.accessType === LifafaAccessType.PROTECTED && (!isUserHasProtectedAccess(lifafa, uid) ||
-            !isPasswordMatching(lifafa, access) || !access.accessType)) {
+            !isPasswordMatching(access) || !access.accessType)) {
             setScreenType(LifafaAccessScreen.SHOW_PASSWORD)
         } else if (lifafa.accessType === LifafaAccessType.PRIVATE && !isLifafaOwner(lifafa, uid)) {
             navigate('/lifafa', {
@@ -90,7 +90,7 @@ export default function LifafaPage() {
     }, [location])
 
     return (
-            <Box ref={ref} className="flex flex-1 w-full min-h-[100vh] max-sm:mb-[60px] md:max-2xl:ml-[60px]">
+            <Box ref={ref} className="flex flex-1 w-full min-h-[100vh] max-sm:mb-[60px] max-sm:ml-0 ml-[60px]">
                 { !isLoading || isLoading === pageStatus.LOADING ?
                 <Box className="w-full">
                     <Loader />

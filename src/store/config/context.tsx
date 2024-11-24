@@ -1,9 +1,9 @@
-import { createContext, ReactElement, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 
 export type configContextType =  DOMRect
 
 const configContext = createContext<configContextType>({} as configContextType)
-const configContextDispatch = createContext((val: DOMRect) => {});
+const configContextDispatch = createContext((_: DOMRect) => {});
 
 export function ConfigContextProvider({children}: {children: ReactNode}) {
     const [state , setState] = useState<configContextType>({} as configContextType);

@@ -1,5 +1,5 @@
-import { RatnaFE, ReducerAction } from "../../types/documentFETypes";
-import { RatnaActions, RatnaCreate, RatnaDelete, RatnaFetch, RatnaReduxAction, RatnaReduxPayloadType, RatnaUpdate } from "./actionCreator";
+import { RatnaFE } from "../../types/documentFETypes";
+import { RatnaActions, RatnaReduxAction } from "./actionCreator";
 import { RatnaContextDataType } from "./context";
 
 export const initialState: RatnaContextDataType = {

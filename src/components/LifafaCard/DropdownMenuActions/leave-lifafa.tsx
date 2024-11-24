@@ -1,5 +1,5 @@
 
-import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
+import { TrashIcon } from "@radix-ui/react-icons";
 import { SyntheticEvent } from "react";
 import { leaveProtectedLifafa, leavePublicLifafa } from "../../../api/api";
 import { useAuth } from "../../../store/auth/context";
