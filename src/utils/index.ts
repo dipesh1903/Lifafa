@@ -91,3 +91,24 @@ export function getDisplayName(name: string): string {
     return 'MR'
   }
 }
+
+export function matchYoutubeUrl(url: string): string {
+  var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+  var matches = url.match(p);
+  if(matches){
+      return matches[1];
+  }
+  return '';
+}
+
+
+export function getYoutubeVideoId(url: string): string {
+  var id = matchYoutubeUrl(url);
+  if(!!id){
+      return id;
+  } else return '';
+}
+
+export function createYoutubeImgUrl(videoId: string): string {
+  return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+}

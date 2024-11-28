@@ -2,6 +2,7 @@ import { User } from "firebase/auth";
 import { Timestamp } from "firebase/firestore";
 import { LifafaAccessType } from "../constant";
 import { UserInfo } from "./types";
+import { OgObject } from "./ogGraphTypes";
 
 export interface LifafaDoc extends DocCreaterInfo {
     name: string;
@@ -41,7 +42,8 @@ export interface RatnaDoc extends DocCreaterInfo {
     tags?: string[];
     isFavourite?: boolean;
     info?: string;
-    creatorName: string
+    creatorName: string,
+    openGraphInfo?: OgObject
 }
 
 export interface RatnaDocUpdate extends Partial<Omit<RatnaDoc, "createdBy" | "createdAt">>, DocUpdaterInfo {}

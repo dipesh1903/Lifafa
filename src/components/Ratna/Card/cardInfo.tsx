@@ -1,9 +1,10 @@
 import { Flex, Heading } from "@radix-ui/themes";
 import { RatnaFE } from "../../../types/documentFETypes";
-import { isValidUrl } from "../../../utils";
+import { createYoutubeImgUrl, getYoutubeVideoId, isValidUrl } from "../../../utils";
 import TagsDropdown from "../../tag-popover";
 import TagList from "../../tags-list";
 import { useSearchParams } from "react-router-dom";
+import { OgObject } from "../../../types/ogGraphTypes";
 
 type props = {
     ratna: RatnaFE
@@ -12,6 +13,23 @@ type props = {
 export default function CardInfo({ratna}: props ) {
 
     const [searchParam , setSearchParam] = useSearchParams();
+
+    const {
+        ogTitle = '',
+        ogDescription = '',
+        requestUrl,
+    } = ratna.openGraphInfo || {} as OgObject
+
+    let {
+        ogImage
+    } = ratna.openGraphInfo || {} as OgObject
+
+    if ((!ogImage || !ogImage.length) && !!requestUrl) {
+        const videoId = getYoutubeVideoId(requestUrl);
+        if (videoId) {
+            ogImage = [{url: createYoutubeImgUrl(videoId)}]
+        }
+    }
 
     function openContent() {
         if(isValidUrl(ratna.content)) {
@@ -33,10 +51,13 @@ export default function CardInfo({ratna}: props ) {
     return (
         <Flex direction="column" gap="1.5" onClick={openContent}>
             {
-                ratna.name && <Heading size="5">{ratna.name}</Heading>
+                <Heading className="mb-2" size="5">{ogTitle || ratna.name}</Heading>
             }
-            <p className="max-h-60 font-semibold text-lg">{ratna.content}</p>
-            {ratna.description && <p className="max-h-60 pt-2">{ratna.description}</p> }
+            {
+                ogImage?.length && requestUrl ? <img src={ogImage[0].url}></img> :
+                <p className="max-h-60 font-semibold text-lg">{ratna.content}</p>
+            }
+            <p className="max-h-60 pt-2">{ogDescription || ratna.description}</p>
             <Flex align="center" className="flex mt-4">
                 <div className="mt-2 mr-2">
                     <TagsDropdown ratna={ratna}/>

@@ -25,6 +25,8 @@ export default function RatnaList({lifafaId, lifafaContext}: {lifafaId: string, 
         }
     }
 
+    console.log('ratnas are', ratnas);
+
     useEffect(() => {
         if (!ratnas || !ratnas.length) {
             getRatnas(lifafaId).then(

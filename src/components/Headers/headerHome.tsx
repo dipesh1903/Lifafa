@@ -24,7 +24,7 @@ export default function HeaderHome({lifafa}: {lifafa: LifafaFE}) {
                     <DropdownMenuIcon width="22"/>
                 </IconButton> */}
             </Flex>
-            <Flex gap="2" align="center" className="hidden max-sm:visible">
+            <Flex gap="2" align="center" className="hidden max-sm:block">
                 <SignOut />
             </Flex>
             {

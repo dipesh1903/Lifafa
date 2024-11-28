@@ -11,6 +11,7 @@ import DeleteRatna from "../DropdownMenuActions/delete-ratna";
 import EditRatnas from "../DropdownMenuActions/edit-ratna";
 import { Month } from "../../../constant";
 import EditRatna from "../../edit-ratna";
+import { OgObject } from "../../../types/ogGraphTypes";
 
 type props = {
     ratna: RatnaFE,
@@ -19,8 +20,14 @@ type props = {
 }
 
 export default function RatnaCard({ratna, lifafaId}: props) {
+
     const user = useAuth();
     const [open , setOpen] = useState(false);
+
+    const {
+        favicon
+    } = ratna.openGraphInfo || {} as OgObject;
+
     const menuItems: ReactNode[] = [
         <DropdownMenuItem>
             <InfoCircledIcon className="pr-2 size-6"/> Info
@@ -50,6 +57,7 @@ export default function RatnaCard({ratna, lifafaId}: props) {
             <div className="flex-col justify-items-center pt-[10px]  text-sm font-semibold  text-light-outline px-6">
                 <p>{Month[ratna.createdAt.toDate().getMonth() - 1]}</p>
                 <p className="text-[12px]">{ratna.createdAt.toDate().getDate()}, {ratna.createdAt.toDate().getFullYear()}</p>
+                {favicon && <img className="pt-2" src={favicon} />}
             </div>
             <div className="relative w-[1px] border-l border-b border-light-outlineVariant">
                 <div className="font-semibold absolute top-[10px] text-light-onPrimary bg-light-primary left-[-15px] text-xs border-2 rounded-full border-light-outlineVariant p-[4px]">{getDisplayName(ratna.creatorName)}</div>

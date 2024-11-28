@@ -19,6 +19,7 @@
     "clsx": "^2.1.1",
     "deep-equal": "^2.2.3",
     "firebase": "^10.14.1",
+    "open-graph-scraper": "^6.8.2",
     "postcss": "^8.4.47",
     "postcss-import": "^16.1.0",
     "react": "^18.3.1",

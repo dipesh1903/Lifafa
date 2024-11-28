@@ -8,7 +8,9 @@ import { useRatnaDispatch } from "../../store/ratnas/context";
 import { RatnaActionFactory } from "../../store/ratnas/actionCreator";
 import { PrimaryButton } from "../ui/Button";
 import { Textarea } from "../ui/textarea";
-import { cn } from "../../utils";
+import { cn, isValidUrl } from "../../utils";
+import { getFunctions, httpsCallable } from "firebase/functions";
+import { OgObject } from "../../types/ogGraphTypes";
 
 type props = {
     lifafaId: string,
@@ -21,14 +23,24 @@ export default function CreateRatnaInput({lifafaId}: props) {
     const user = useAuth();
     const dispatch = useRatnaDispatch();
 
+    const functions = getFunctions();
+    const openGraph = httpsCallable<{url: string}, {error: boolean,result: OgObject}
+    >(functions, "openGraph")
 
     async function createRatna() {
         try {
+            let openGraphDetails = null;
+            if(isValidUrl(value)) {
+                openGraphDetails = await openGraph({url: value})
+            }
             const ratna = {
                 content: value,
+                name: openGraphDetails?.data.result.ogTitle || '',
                 createdAt: Timestamp.fromDate(new Date()),
                 createdBy: user.user.uid,
-                creatorName: user.user.displayName || ''
+                creatorName: user.user.displayName || '',
+                openGraphInfo: openGraphDetails?.data.result,
+                description: openGraphDetails?.data.result.ogDescription || ''
             }
             const result = await CreateRatna(ratna, lifafaId)
             dispatch(RatnaActionFactory.createActionCompleted(result, lifafaId));

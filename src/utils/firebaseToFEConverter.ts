@@ -29,7 +29,8 @@ export function convertRatnaToFE(id: string, data: DocumentData): RatnaFE {
             id,
             createdAt: data.createdAt,
             createdBy: data.createdBy,
-            creatorName: data.creatorName
+            creatorName: data.creatorName,
+            openGraphInfo: data.openGraphInfo
         }
     )
 }
