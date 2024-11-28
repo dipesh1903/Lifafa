@@ -4,6 +4,8 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import LifafaListDrawer from "../Drawers/Lifafa";
 import { useState } from "react";
 import { useConfig } from "../../store/config/context";
+import PulseAnimation from "../ui/pulse-animation";
+import { useLifafa } from "../../store/lifafas/context";
 
 export default function SideBarMobile() {
     const navigate = useNavigate();
@@ -11,6 +13,7 @@ export default function SideBarMobile() {
     const config = useConfig();
     const { lifafaId } = useParams();
     const location = useLocation();
+    const lifafas = useLifafa();
 
     function onClick() {
         if (lifafaId) {
@@ -28,9 +31,14 @@ export default function SideBarMobile() {
             <Flex direction="row" style={{width: config.width}} className={`h-screen p-2 bg-opacity-80 fixed top-[calc(100%-60px)] justify-evenly bg-light-surfaceVariant`}>
                 <Flex>
                     <Tooltip content={lifafaId ? 'Add Ratna' : 'Add Lifafa'}>
-                        <IconButton size="3" variant="soft" className="cursor-pointer" onClick={onClick}>
-                            <PlusCircledIcon width="22" height="22"/>
-                        </IconButton>
+                        <div className="relative h-fit" onClick={onClick}>
+                            <IconButton size="3" variant="soft" className="cursor-pointer">
+                                <PlusCircledIcon width="22" height="22"/>
+                            </IconButton>
+                            {
+                                (!lifafas || !Object.keys(lifafas.data).length) && <PulseAnimation/>
+                            }
+                        </div>
                     </Tooltip>
                 </Flex>
                 <IconButton size="3" className="cursor-pointer" variant="soft" onClick={() => setOpen(true)}>

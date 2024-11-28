@@ -7,6 +7,8 @@ import RatnaCard from "./Card";
 import { getRatnas } from "../../api/ratna";
 import { RatnaActionFactory } from "../../store/ratnas/actionCreator";
 import { useSearchParams } from "react-router-dom";
+import { Player } from "@lottiefiles/react-lottie-player";
+import EmptyLifafa from '../../assets/empty-lifafa-lottie.json'
 
 export default function RatnaList({lifafaId, lifafaContext}: {lifafaId: string, lifafaContext?: LifafaContextDataType}) {
     const ratnaContext = useGetRatnaFromPath(lifafaId);
@@ -25,8 +27,6 @@ export default function RatnaList({lifafaId, lifafaContext}: {lifafaId: string, 
         }
     }
 
-    console.log('ratnas are', ratnas);
-
     useEffect(() => {
         if (!ratnas || !ratnas.length) {
             getRatnas(lifafaId).then(
@@ -38,10 +38,20 @@ export default function RatnaList({lifafaId, lifafaContext}: {lifafaId: string, 
     }, [])
 
     return (
-            ratnas && ratnas.map(item => {
+        <>
+        {
+            ratnas && ratnas.length ? ratnas.map(item => {
                 return (
                         <RatnaCard key={item.id} lifafaId={lifafaId} ratna={item} access={access}/>
                 )
-            })
+            }) :
+            <Player
+                src={EmptyLifafa}
+                autoplay
+                loop
+                className="h-96"
+            />
+        }
+        </>
     )
 }

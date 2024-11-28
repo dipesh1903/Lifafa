@@ -59,7 +59,22 @@ export default {
       },
       screens: {
         'sm': '768px'
-      }
+      },
+      keyframes: {
+        pulseAnimation: {
+          '0%':  {
+              transform: 'scale(.5, .5)',
+              opacity: '.5'
+          },
+          '100%':  {
+            transform: 'scale(2.5, 2.5)',
+            opacity: '0'
+          }
+        }
+      },
+      // animation: {
+      //   buttonPulseAnimate: 'pulseAnimation 4s ease-in-out infinite'
+      // }
     },
   },
   plugins: [],

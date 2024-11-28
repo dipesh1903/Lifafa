@@ -8,6 +8,8 @@ import LifafaCard from "../components/LifafaCard";
 import HeaderLifafaHome from "../components/Headers/headerLifafaHome";
 import { PrimaryButton } from "../components/ui/Button";
 import Loader from "../components/Loaders/loader";
+import EmptyLifafa from '../assets/empty-lifafa-lottie.json';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 export default function LifafaHomeContent() {
     const user = useAuth();
@@ -42,8 +44,13 @@ export default function LifafaHomeContent() {
                             }) : 
                             <Flex justify="center">
                                 <Flex direction="column" align="center" justify="center" className="w-fit">
-                                    <div className="text-[24px] pb-2">Create your first Lifafa</div>
-                                    <PrimaryButton onClick={() => navigate('/lifafa/create')}>Create</PrimaryButton>
+                                <Player
+                                    src={EmptyLifafa}
+                                    autoplay
+                                    loop
+                                    className="h-96"
+                                />
+                                {/* <PrimaryButton className="w-fit" onClick={() => navigate('/lifafa/create')}>Create first Lifafa</PrimaryButton> */}
                                 </Flex>
                             </Flex>
                         }
