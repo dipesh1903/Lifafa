@@ -117,7 +117,7 @@ export default function TagsDropdown({ratna}: props) {
                                 onClick={addToList}>+ create</PrimaryButton>
                         </div>
                     }
-                    {(watchAllFields && tags.length) ? <PrimaryButton className="mt-2" onClick={saveTags}>Save</PrimaryButton> : null }
+                    {(watchAllFields && tags && tags.length) ? <PrimaryButton className="mt-2" onClick={saveTags}>Save</PrimaryButton> : null }
                     <Popover.Arrow className="fill-white" />
                 </Popover.Content>
             </Popover.Portal>

@@ -50,7 +50,7 @@ export default function LifafaHomeContent() {
                                     loop
                                     className="h-96"
                                 />
-                                {/* <PrimaryButton className="w-fit" onClick={() => navigate('/lifafa/create')}>Create first Lifafa</PrimaryButton> */}
+                                <PrimaryButton className="w-fit" onClick={() => navigate('/lifafa/create')}>Create first Lifafa</PrimaryButton>
                                 </Flex>
                             </Flex>
                         }

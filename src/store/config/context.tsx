@@ -9,9 +9,9 @@ export function ConfigContextProvider({children}: {children: ReactNode}) {
     const [state , setState] = useState<configContextType>({} as configContextType);
 
     function setPos(val: DOMRect) {
-        
         setState(val);
     }
+
     return (
         <configContext.Provider value={state}>
             <configContextDispatch.Provider value={setPos}>

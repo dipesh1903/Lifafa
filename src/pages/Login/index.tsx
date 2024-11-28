@@ -38,7 +38,7 @@ export default function Login() {
     } else {
         return (
             <Flex className="h-lvh w-lvw m-auto">
-                <Flex direction='column' align="center" justify="center" className="p-10 border-[1px] w-fit m-auto rounded-lg h-[400px] border-stone-300">
+                <Flex direction='column' align="center" justify="center" className="p-10 mx-4 text-center border-[1px] w-fit m-auto rounded-lg h-[400px] border-stone-300">
                     <img src={LogoComponent} width="80px" height="80px" className="pb-4"/>
                     <p className="font-bold">{LOGIN.message}</p>
                     <Button variant="outline" onClick={signInWithGoogle} className="my-4 h-10 cursor-pointer">

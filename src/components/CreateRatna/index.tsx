@@ -12,6 +12,7 @@ import { cn, isValidUrl } from "../../utils";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { OgObject } from "../../types/ogGraphTypes";
 import { RatnaDoc } from "../../types/firebaseDocument";
+import Spinner from "../../assets/svg/spinner.svg"
 
 type props = {
     lifafaId: string,
@@ -21,6 +22,7 @@ type props = {
 export default function CreateRatnaInput({lifafaId}: props) {
 
     const [value, setValue] = useState('');
+    const [loading, setLoading] = useState<boolean>(false);
     const user = useAuth();
     const dispatch = useRatnaDispatch();
     const ratnas = useRatna();
@@ -32,6 +34,7 @@ export default function CreateRatnaInput({lifafaId}: props) {
 
     async function createRatna() {
         try {
+            setLoading(true)
             let openGraphDetails = null;
             if(isValidUrl(value)) {
                 openGraphDetails = await openGraph({url: value})
@@ -51,6 +54,7 @@ export default function CreateRatnaInput({lifafaId}: props) {
             dispatch(RatnaActionFactory.createActionCompleted(result, lifafaId));
         } catch {
         } finally {
+            setLoading(false);
             setValue('');
         }
     }
@@ -58,19 +62,19 @@ export default function CreateRatnaInput({lifafaId}: props) {
     return (
         <Flex direction="column" gap="2">
             <div className={cn("ring-light-secondary ring-2 rounded-lg", {
-                'animate-pulse': animateInput,
-                'ring-4': animateInput,
+                'animate-pulse': animateInput && !value,
+                'ring-4': animateInput && !value,
             })}>
                 <Textarea autoFocus
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
-                    className="m-0 focus:ring-0 rounded-lg focus:border-none outline-none focus:ring-inset light-secondaryappearance-none focus:outline-none w-full h-30 p-4 resize-none bg-white font-semibold text-[20px]" placeholder="Add your ratna">
+                    className="m-0 focus:ring-0 rounded-lg focus:border-none outline-none focus:ring-inset light-secondaryappearance-none focus:outline-none w-full h-30 p-4 resize-none bg-white font-semibold text-[16px]" placeholder="Add your ratna">
                 </Textarea>
             </div>
             <Flex justify="end" align="center"> 
-                <PrimaryButton className={cn("px-2 pt-2 w-[20%] mt-2", `${!value.length ? 'pointer-events-none bg-opacity-60' : ''}`)}
+                <PrimaryButton className={cn("px-2 pt-2 w-[20%] mt-2", `${!value.length || loading ? 'pointer-events-none bg-opacity-60' : ''}`)}
                 onClick={createRatna}>
-                    Add
+                    {loading && <img src={Spinner}/>}<span className="pl-1">Add</span>
                 </PrimaryButton>
             </Flex>
         </Flex>

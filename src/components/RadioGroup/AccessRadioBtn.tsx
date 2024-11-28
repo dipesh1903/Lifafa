@@ -17,7 +17,6 @@ const AccessRadioGroup = forwardRef<
     props
 >(({radioItems, onValueChange, defaultValue, className}, ref) => {
     return (
-        <form>
             <RadioGroupPrimitive.Root className={cn("flex gap-1.5", className)}
 			defaultValue={defaultValue}
 			aria-label="View density"
@@ -38,7 +37,6 @@ const AccessRadioGroup = forwardRef<
                     })
                 }
             </RadioGroupPrimitive.Root>
-        </form>
     );
 });
 

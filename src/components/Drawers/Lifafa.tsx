@@ -10,6 +10,8 @@ import { LifafaActionFactory } from "../../store/lifafas/actionCreator";
 import { useConfig } from "../../store/config/context";
 import LifafaCard from "../LifafaCard";
 import { PrimaryButton } from "../ui/Button";
+import { Player } from "@lottiefiles/react-lottie-player";
+import EmptyLifafa from "../../assets/empty-lifafa-lottie.json";
 
 type props = {
     drawerPosition?: {width: number , left: number},
@@ -56,7 +58,7 @@ export default function LifafaListDrawer({setOpen , open}: props) {
                         <PrimaryButton onClick={() => { onOpenChange(false); navigate('/lifafa/create')}} className="my-4">Create</PrimaryButton>
                         <Box className="border-y-[0.5px] overflow-scroll mt-2 w-full bg-light-surface border-light-outlineVariant">
                         {
-                            result.map(item => {
+                            result && result.length ? result.map(item => {
                                 return (
                                     <Box className="px-6 py-4 border-b-[0.5px] border-light-outlineVariant hover:bg-light-surfaceDim hover:cursor-pointer"
                                     key={item.lifafa.id}
@@ -65,7 +67,13 @@ export default function LifafaListDrawer({setOpen , open}: props) {
                                         lifafa={item.lifafa}/>
                                     </Box>
                                 )
-                            })
+                            }) : 
+                            <Player
+                                src={EmptyLifafa}
+                                autoplay
+                                loop
+                                className="h-96"
+                            />
                         }
                     </Box>
                         </Flex>

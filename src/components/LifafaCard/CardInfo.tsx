@@ -16,7 +16,7 @@ export default function CardInfo({lifafa}: props) {
 
     return (
         <Flex direction="column" className="text-light-onSurfaceVariant" gap="1.5">
-            <Heading size="4" >{name || 'A lifafa'}</Heading>
+            <h1 className="font-bold text-[20px]">{name || 'A lifafa'}</h1>
             <p>{userInfo?.name}</p>
             <p>{createdAt.toDate().toDateString()}</p>
             <p>{description}</p>

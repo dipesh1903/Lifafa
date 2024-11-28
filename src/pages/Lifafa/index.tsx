@@ -36,6 +36,10 @@ export default function LifafaPage() {
         uid
     } = user.user;
 
+    if (lifafaId && (!lifafaContext.data[lifafaId] || !Object.keys(lifafaContext.data[lifafaId]).length)) {
+        navigate('..')
+    }
+
     function handleLifafaScreen(lifafa: LifafaFE, access: SharedUserFE, uid: string) {
         if (isLifafaOwner(lifafa, uid)) {
             setScreenType(LifafaAccessScreen.SHOW_RATNAS)
