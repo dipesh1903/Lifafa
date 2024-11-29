@@ -53,13 +53,8 @@ function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string
                 content: data.ratnaContent,
                 description: data.ratnaDescription
             }
-            if (user.isAnonymousUser && ratnas && ratnas.data && ratnas.data[lifafaId] && Object.keys(ratnas.data[lifafaId]).length) {
-                onClose();
-                toast.info('Login to get complete access');
-                return;
-            }
-            setLoading(true);
             if (ratna.id) {
+                setLoading(true);
                 updateRatna(doc, lifafaId, ratna.id).then(val => {
                     dispatch(RatnaActionFactory.updateRatnaCompleted(val, lifafaId, ratna.id))
                     
@@ -69,6 +64,12 @@ function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string
                     onClose()
                 })
             } else {
+                if (user.isAnonymousUser && ratnas && ratnas.data && ratnas.data[lifafaId] && Object.keys(ratnas.data[lifafaId]).length) {
+                    onClose();
+                    toast.info('Login to get complete access');
+                    return;
+                }
+                setLoading(true);
                 CreateRatna({
                     ...doc,
                     creatorName: user.user.displayName || '',

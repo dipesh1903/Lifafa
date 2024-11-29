@@ -81,7 +81,7 @@ export default function CreateRatnaInput({lifafaId, isDisabled}: props) {
                     className={cn(`m-0 focus:ring-0 rounded-lg focus:border-none outline-none focus:ringinset
                         light-secondaryappearance-none focus:outline-none w-full h-30 p-4 resize-none bg-white font-semibold text-[16px]`, 
                         {"pointer-events-none": isDisabled, "opacity-50": isDisabled})}
-                    placeholder="Add your ratna">
+                    placeholder="Share your favourite links, book, thoughts...">
                 </Textarea>
             </div>
             { isDisabled && <div>** Login to get full feature Access **</div> }

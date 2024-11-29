@@ -80,7 +80,6 @@ export const LifafaActionFactory = {
         }
     }),
 
-
     createLifafaCompleted: (lifafa: LifafaFE) => ({
         type: LifafaActions.CREATE,
         payload: {
