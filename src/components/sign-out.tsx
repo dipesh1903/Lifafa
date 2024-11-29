@@ -23,7 +23,7 @@ export default function SignOut() {
                 dispatch(AuthActionFactory.signIn(user.user, true))
                 toast.success("Signed up Successfull")
                 toast.info("You are free to use all app features");
-            }).catch((error) => {
+            }).catch(() => {
                 toast.error("User is already signed up. Try logging in with the user")
                 navigate(`/login?redirectLink=${location.pathname}`, {
                     replace: true,

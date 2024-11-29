@@ -1,7 +1,7 @@
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase.config";
 import { COLLECTIONS } from "../config/firebaseCollection";
-import { LifafaDoc, RatnaDoc, RatnaDocUpdate, SharedUserDoc } from "../types/firebaseDocument";
+import { RatnaDoc, RatnaDocUpdate, SharedUserDoc } from "../types/firebaseDocument";
 import { RatnaFE, SharedUserFE } from "../types/documentFETypes";
 import { convertRatnaToFE } from "../utils/firebaseToFEConverter";
 import { ApiStatus } from "../constant";

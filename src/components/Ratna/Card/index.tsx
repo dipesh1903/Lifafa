@@ -6,7 +6,7 @@ import { ReactNode, SyntheticEvent, useState } from "react";
 import { getDisplayName, isRatnaCreator, isValidUrl } from "../../../utils";
 import { useAuth } from "../../../store/auth/context";
 import { DropdownMenuItem } from "../../ui/Dropdown-menu";
-import { CopyIcon, InfoCircledIcon } from "@radix-ui/react-icons";
+import { CopyIcon } from "@radix-ui/react-icons";
 import DeleteRatna from "../DropdownMenuActions/delete-ratna";
 import EditRatnas from "../DropdownMenuActions/edit-ratna";
 import { Month } from "../../../constant";

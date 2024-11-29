@@ -23,4 +23,4 @@ export const analytics = getAnalytics(app);
 export const firebaseAuth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 export const db = getFirestore(app);
-const functions = getFunctions(app);
+getFunctions(app);
