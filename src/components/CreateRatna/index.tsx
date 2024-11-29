@@ -78,6 +78,7 @@ export default function CreateRatnaInput({lifafaId, isDisabled}: props) {
                     placeholder="Add your ratna">
                 </Textarea>
             </div>
+            { isDisabled && <div>** Login to get full feature Access **</div> }
             <Flex justify="end" align="center"> 
                 <PrimaryButton className={cn("px-2 pt-2 w-[20%] mt-2", `${!value.length || loading ? 'pointer-events-none bg-opacity-60' : ''}`)}
                 onClick={createRatna}>

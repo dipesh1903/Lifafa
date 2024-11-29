@@ -3,7 +3,7 @@ import { LifafaFE, RatnaFE, SharedUserFE } from "../types/documentFETypes"
 
 export function convertLifafaToFE(id: string, data: DocumentData): LifafaFE {
     if (!!data.createdAt && !!data.createdAt['seconds']) {
-        data.createdAt = new Timestamp(data['seconds'], data['nanoseconds']);
+        data.createdAt = new Timestamp(data.createdAt['seconds'], data.createdAt['nanoseconds']);
     }
     return (
         {
@@ -22,7 +22,7 @@ export function convertLifafaToFE(id: string, data: DocumentData): LifafaFE {
 
 export function convertRatnaToFE(id: string, data: DocumentData): RatnaFE {
     if (!!data.createdAt && !!data.createdAt['seconds']) {
-        data.createdAt = new Timestamp(data['seconds'], data['nanoseconds']);
+        data.createdAt = new Timestamp(data.createdAt['seconds'], data.createdAt['nanoseconds']);
     }
     return (
         {
@@ -42,6 +42,9 @@ export function convertRatnaToFE(id: string, data: DocumentData): RatnaFE {
 }
 
 export function convertSharedUserToFE(id: string, data: DocumentData): SharedUserFE {
+    if (!!data.joinedAt && !!data.joinedAt['seconds']) {
+        data.joinedAt = new Timestamp(data.joinedAt['seconds'], data.joinedAt['nanoseconds']);
+    }
     return (
         {
             accessType: data.accessType,

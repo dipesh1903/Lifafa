@@ -18,6 +18,8 @@ import { PrimaryButton } from "./ui/Button";
 import Error from "./ui/text-error";
 import { useAuth } from "../store/auth/context";
 import { User } from "firebase/auth";
+import { useState } from "react";
+import Spinner from "../assets/svg/spinner.svg"
 
 type formValues = {
     ratnaName: string,
@@ -27,6 +29,7 @@ type formValues = {
 
 function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string, onClose: () => void})  { 
         const dispatch = useRatnaDispatch();
+        const [loading, setLoading] = useState<boolean>(false);
         const user = useAuth();
         const {
             register,
@@ -47,12 +50,16 @@ function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string
                 content: data.ratnaContent,
                 description: data.ratnaDescription
             }
+            setLoading(true);
             if (ratna.id) {
                 updateRatna(doc, lifafaId, ratna.id).then(val => {
                     dispatch(RatnaActionFactory.updateRatnaCompleted(val, lifafaId, ratna.id))
                     
                 }).catch()
-                .finally(() => onClose())
+                .finally(() => {
+                    setLoading(false)
+                    onClose()
+                })
             } else {
                 CreateRatna({
                     ...doc,
@@ -63,7 +70,10 @@ function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string
                     if (!val) return;
                     dispatch(RatnaActionFactory.createActionCompleted(val, lifafaId))
                 }).catch()
-                .finally(() => onClose())
+                .finally(() => {
+                    setLoading(false)
+                    onClose()
+                })
             }
         }
     
@@ -116,7 +126,10 @@ function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string
                     }/>
                 </Flex>
                 <Flex justify="end" className="w-full mt-4">
-                    <PrimaryButton type="submit" className="justify-self-center group-invalid:pointer-events-none group-invalid:opacity-30 group-invalid:cursor-none focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center" variant="solid">Save</PrimaryButton>
+                    <PrimaryButton type="submit"
+                    className={cn(`justify-self-center group-invalid:pointer-events-none group-invalid:opacity-30 group-invalid:cursor-none focus:ring-4 focus:outline-none font-medium rounded-lg
+                        text-sm w-full px-5 py-2.5 text-center`, {"pointer-events-none bg-opacity-60" : loading})}
+                    variant="solid">{loading && <img src={Spinner}/>}<span className="pl-1">Save</span></PrimaryButton>
                 </Flex>
                 </form>
             </Flex>

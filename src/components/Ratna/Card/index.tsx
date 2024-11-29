@@ -29,9 +29,9 @@ export default function RatnaCard({ratna, lifafaId}: props) {
     } = ratna.openGraphInfo || {} as OgObject;
 
     const menuItems: ReactNode[] = [
-        <DropdownMenuItem>
-            <InfoCircledIcon className="pr-2 size-6"/> Info
-        </DropdownMenuItem>,
+        // <DropdownMenuItem>
+        //     <InfoCircledIcon className="pr-2 size-6"/> Info
+        // </DropdownMenuItem>,
         <DropdownMenuItem onClick={(e: SyntheticEvent) => {
             e.stopPropagation();
             navigator.clipboard.writeText(ratna.content);
