@@ -14,6 +14,7 @@ import { OgObject } from "../../types/ogGraphTypes";
 import { RatnaDoc } from "../../types/firebaseDocument";
 import Spinner from "../../assets/svg/spinner.svg"
 import { User } from "firebase/auth";
+import { toast } from "react-toastify";
 
 type props = {
     lifafaId: string,
@@ -36,6 +37,11 @@ export default function CreateRatnaInput({lifafaId, isDisabled}: props) {
 
     async function createRatna() {
         try {
+            if (user.isAnonymousUser && ratnas && ratnas.data && ratnas.data[lifafaId] && Object.keys(ratnas.data[lifafaId]).length) {
+                setValue('');
+                toast.info('Login to get complete access');
+                return;
+            }
             setLoading(true)
             let openGraphDetails = null;
             if(isValidUrl(value)) {

@@ -10,7 +10,6 @@ import { getCurrentUserLifafaAccess } from "./ratna";
 import { LifafaAccessType } from "../constant";
 import { toast } from "react-toastify";
 import { getFunctions, httpsCallable } from "firebase/functions";
-import { OgObject } from "../types/ogGraphTypes";
 
 export async function fetchLifafa(lifafaId: string, uid: string): Promise<{lifafa: LifafaFE, access: SharedUserFE} | null> {
     let lifafa = null;
@@ -18,9 +17,7 @@ export async function fetchLifafa(lifafaId: string, uid: string): Promise<{lifaf
         const docRef = doc(db, COLLECTIONS.LIFAFA.index, lifafaId);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-            
             lifafa = convertLifafaToFE(docSnap.id, docSnap.data());
-            
             let access = lifafa.createdBy === uid ? {accessType: LifafaAccessType.PRIVATE, id: uid} as SharedUserFE : {} as SharedUserFE
             try {
                 if (!access.accessType) {
@@ -28,7 +25,6 @@ export async function fetchLifafa(lifafaId: string, uid: string): Promise<{lifaf
                     
                 }
             } catch (error) {
-                
             }
             finally {
                 return Promise.resolve({lifafa: convertLifafaToFE(docSnap.id, docSnap.data()), access: access as SharedUserFE});

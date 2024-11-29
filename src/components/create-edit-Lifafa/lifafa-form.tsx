@@ -12,6 +12,8 @@ import { Input } from "../ui/input";
 import Label from "../ui/Label";
 import Error from "../ui/text-error";
 import Spinner from "../../assets/svg/spinner.svg";
+import { useLifafa } from "../../store/lifafas/context";
+import { toast } from "react-toastify";
 
 
 type formValues = {
@@ -20,12 +22,14 @@ type formValues = {
   }
 
 export default function Form({onClose}: {onClose: (navigateBack: boolean) => void}) {
+
     const navigate = useNavigate();
     const location = useLocation();
     const { lifafaId }= useParams();
     const [loading, setLoading] = useState<boolean>(false)
     const user = useAuth();
     const [access , setAccess] = useState(LifafaAccessType.PRIVATE)
+    const lifafas = useLifafa();
     const radioItems = Object.keys(LifafaAccessType).map(value => {
         if (user.isAnonymousUser) {
             return {label: value, value, isDisabled: value !== LifafaAccessType.PRIVATE}
@@ -61,6 +65,11 @@ export default function Form({onClose}: {onClose: (navigateBack: boolean) => voi
 
     async function onCreate(name: string, password?: string) {
         try {
+            if (user.isAnonymousUser && lifafas && lifafas.data && Object.keys(lifafas.data).length) {
+                onClose(false);
+                toast.info('Login to get complete access');
+                return;
+            }
             setLoading(true)
             const lifafa = await createLifafa({
                 name,

@@ -11,7 +11,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { CreateRatna, updateRatna } from "../api/ratna";
 import { Timestamp } from "firebase/firestore";
-import { useRatnaDispatch } from "../store/ratnas/context";
+import { useRatna, useRatnaDispatch } from "../store/ratnas/context";
 import { RatnaActionFactory } from "../store/ratnas/actionCreator";
 import { useConfig } from "../store/config/context";
 import { PrimaryButton } from "./ui/Button";
@@ -20,6 +20,7 @@ import { useAuth } from "../store/auth/context";
 import { User } from "firebase/auth";
 import { useState } from "react";
 import Spinner from "../assets/svg/spinner.svg"
+import { toast } from "react-toastify";
 
 type formValues = {
     ratnaName: string,
@@ -28,9 +29,11 @@ type formValues = {
 }
 
 function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string, onClose: () => void})  { 
+
         const dispatch = useRatnaDispatch();
         const [loading, setLoading] = useState<boolean>(false);
         const user = useAuth();
+        const ratnas = useRatna();
         const {
             register,
             handleSubmit,
@@ -49,6 +52,11 @@ function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string
                 updatedAt: Timestamp.fromDate(new Date()),
                 content: data.ratnaContent,
                 description: data.ratnaDescription
+            }
+            if (user.isAnonymousUser && ratnas && ratnas.data && ratnas.data[lifafaId] && Object.keys(ratnas.data[lifafaId]).length) {
+                onClose();
+                toast.info('Login to get complete access');
+                return;
             }
             setLoading(true);
             if (ratna.id) {

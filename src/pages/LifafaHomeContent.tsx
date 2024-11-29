@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useAuth } from "../store/auth/context";
 import { LifafaActionFactory } from "../store/lifafas/actionCreator";
 import { useLifafa, useLifafaDispatch } from "../store/lifafas/context";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import LifafaCard from "../components/LifafaCard";
 import HeaderLifafaHome from "../components/Headers/headerLifafaHome";
 import { PrimaryButton } from "../components/ui/Button";
@@ -15,14 +15,14 @@ export default function LifafaHomeContent() {
     const user = useAuth();
     const navigate = useNavigate();
     const lifafas = useLifafa();
+    const location = useLocation();
     const dispatch = useLifafaDispatch();
 
     
     const result = Object.values(lifafas.data || {});
-
     useEffect(() => {
-        dispatch(LifafaActionFactory.fetchAllLifafa(user.user.uid));
-    },[user.user.uid])
+        dispatch(LifafaActionFactory.fetchAllLifafa(user.user.uid, !!location.pathname));
+    },[user.user.uid, location.pathname])
 
     return (
         <>

@@ -13,6 +13,7 @@ export const LifafaActions = {
     CREATE: 'lifafa/create' as const,
     UPDATE: 'lifafa/update' as const,
     DELETE: 'lifafa/delete' as const,
+    DELETE_ALL: 'lifafa/delete_all' as const,
     ACTION_STARTED: 'api/action_started' as const,
     ACTION_COMPLETED: 'api/action_completed' as const,
     ACTION_FAILED: 'api/action_failed' as const,
@@ -71,10 +72,11 @@ export const LifafaActionFactory = {
         }
     }),
 
-    fetchAllLifafaCompleted: (lifafa: LifafaFE[]) => ({
+    fetchAllLifafaCompleted: (lifafa: LifafaFE[], force?: boolean) => ({
         type: LifafaActions.FETCH_ALL,
         payload: {
-            lifafa
+            lifafa,
+            force
         }
     }),
 
@@ -93,13 +95,17 @@ export const LifafaActionFactory = {
         }
     }),
 
-    fetchAllLifafa: (uid: string, force?: boolean ) => {
+    deleteAllLifafa: () => ({
+        type: LifafaActions.DELETE_ALL,
+    }),
+
+    fetchAllLifafa: (uid: string, force?: boolean) => {
         return async function(dispatch: Dispatch<LifafaReduxAction>, getState?: state) {
             try {
                 if (!getState?.().isAllLoaded || !!force) {
                     dispatch(LifafaActionFactory.lifafaActionStarted());
                     const result = await getAllLifafa(uid);
-                    dispatch(LifafaActionFactory.fetchAllLifafaCompleted(result));
+                    dispatch(LifafaActionFactory.fetchAllLifafaCompleted(result, force));
                 }
             } catch (error) {
                 dispatch(LifafaActionFactory.lifafaActionFailed());
@@ -115,6 +121,7 @@ ReturnType<typeof LifafaActionFactory.fetchAllLifafaCompleted> |
 ReturnType<typeof LifafaActionFactory.updateLifafaCompleted> |
 ReturnType<typeof LifafaActionFactory.deleteLifafaCompleted> |
 ReturnType<typeof LifafaActionFactory.fetchSingleLifafaCompleted> |
+ReturnType<typeof LifafaActionFactory.deleteAllLifafa> |
 UserAccessReduxAction
 ;
 

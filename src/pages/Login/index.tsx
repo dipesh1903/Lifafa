@@ -9,9 +9,12 @@ import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { Button, Flex } from "@radix-ui/themes";
 import GoogleIcon from "../../assets/svg/GmailIcon.svg";
 import { useEffect } from "react";
+import { useLifafaDispatch } from "../../store/lifafas/context";
+import { LifafaActionFactory } from "../../store/lifafas/actionCreator";
 
 export default function Login() {
     const dispatch = useAuthDispatch();
+    const lifafaDispatch = useLifafaDispatch();
     const navigate = useNavigate();
     const { state } = useLocation();
     const authUser = useAuth();
@@ -46,6 +49,7 @@ export default function Login() {
         signInAnonymously(auth)
         .then((res) => {
             dispatch(AuthActionFactory.signIn(res.user, true))
+            lifafaDispatch(LifafaActionFactory.deleteAllLifafa());
             const redirectLink = searchUrl.get('redirectLink')
             if (redirectLink) {
                 navigate(redirectLink, {

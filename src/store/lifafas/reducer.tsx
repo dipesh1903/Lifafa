@@ -34,7 +34,6 @@ export function lifafaReducer(lifafas: LifafaContextDataType, action: LifafaRedu
         }
 
         case LifafaActions.FETCH_ALL: {
-            
             const { lifafa } = action.payload
             const result = {} as {[x: string]: {lifafa: LifafaFE , userAccess: {[y: string]: SharedUserFE}}};
             lifafa.forEach((item: LifafaFE) => result[item.id] = {lifafa: item, userAccess: {
@@ -75,6 +74,14 @@ export function lifafaReducer(lifafas: LifafaContextDataType, action: LifafaRedu
             return {
                 ...lifafas,
                 isFetching: true
+            }
+        }
+
+        case LifafaActions.DELETE_ALL: {
+            return {
+                data: {},
+                isFetching: false,
+                isAllLoaded: false
             }
         }
 

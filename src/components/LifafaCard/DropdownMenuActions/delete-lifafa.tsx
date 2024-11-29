@@ -16,7 +16,6 @@ export default function DeleteLifafa({lifafa}: props) {
     const dispatch = useLifafaDispatch();
     function deleteLifafas(e: SyntheticEvent) {
         e.stopPropagation();
-        
         deleteLifafa(lifafa.id, user.user.uid)
         .then(_ => {
             dispatch(LifafaActionFactory.deleteLifafaCompleted(lifafa.id))
