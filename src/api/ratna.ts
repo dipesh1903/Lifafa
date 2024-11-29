@@ -14,6 +14,7 @@ export async function CreateRatna(ratna: RatnaDoc, lifafaId: string, user: User)
     try {
         let ratnaId = '';
         let isRatnaCreated = false;
+        let anonymousResultSuccess = true;
         if (user.isAnonymous) {
             const functions = getFunctions();
             const createAnonymousRatnaLifafa = httpsCallable<{ratna: RatnaDoc, lifafaId: string, uid: string}, {error: any, ratnaId?: string,
@@ -32,12 +33,17 @@ export async function CreateRatna(ratna: RatnaDoc, lifafaId: string, user: User)
             if (result.data.ratnaId) {
                 ratnaId = result.data.ratnaId
             }
+            anonymousResultSuccess = isSuccess;
             isRatnaCreated = !!(isSuccess && !result.data.ratnaCount);
         } else {
             const ref = collection(db, COLLECTIONS.LIFAFA.index, lifafaId, COLLECTIONS.LIFAFA.ratna)
             const addRef = await addDoc(ref, ratna);
             isRatnaCreated = true
             ratnaId = addRef.id
+        }
+        if (!anonymousResultSuccess) {
+            toast.error('Failed!!')
+            return Promise.reject()
         }
         if (isRatnaCreated) {
             toast.success('Created Successfully !!')
@@ -47,8 +53,7 @@ export async function CreateRatna(ratna: RatnaDoc, lifafaId: string, user: User)
             return Promise.resolve();
         }
     } catch(error) {
-        toast.error('Failed!!')
-        return Promise.reject(handleError(error))
+
     }
 }
 

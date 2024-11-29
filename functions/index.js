@@ -10,7 +10,13 @@ export const openGraph = onCall(async (request, response) => {
     try{
         const result = await ogs({url
         })
-        return {result: result.result, error: result.error}
+        return {result: {
+            ogTitle: result.result.ogTitle,
+            ogDescription: result.result.ogDescription,
+            requestUrl: result.result.requestUrl,
+            ogImage: result.result.ogImage,
+            favicon: result.result.favicon
+        }, error: result.error}
     } catch(error) {
         return error
     }

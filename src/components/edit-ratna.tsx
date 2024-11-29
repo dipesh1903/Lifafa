@@ -21,6 +21,8 @@ import { User } from "firebase/auth";
 import { useState } from "react";
 import Spinner from "../assets/svg/spinner.svg"
 import { toast } from "react-toastify";
+import { getFunctions, httpsCallable } from "firebase/functions";
+import { OgObject } from "../types/ogGraphTypes";
 
 type formValues = {
     ratnaName: string,
@@ -46,7 +48,12 @@ function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string
             }
         });
 
-        const onSubmit: SubmitHandler<formValues> = (data: FieldValues) => {
+        const functions = getFunctions();
+
+        const openGraph = httpsCallable<{url: string}, {error: boolean,result: OgObject}
+        >(functions, "openGraph")
+
+        const onSubmit: SubmitHandler<formValues> = async (data: FieldValues) => {
             const doc = {
                 name: data.ratnaName,
                 updatedAt: Timestamp.fromDate(new Date()),
@@ -55,6 +62,17 @@ function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string
             }
             if (ratna.id) {
                 setLoading(true);
+                let openGraphDetails = null;
+                if(isValidUrl(data.ratnaContent)) {
+                    try {
+                        openGraphDetails = await openGraph({url: data.ratnaContent})
+                    } catch (err) {
+                        console.log('open graph details is ', err);
+                    }
+                }
+                if (openGraphDetails) {
+                    ratna.openGraphInfo = openGraphDetails?.data.result
+                }
                 updateRatna(doc, lifafaId, ratna.id).then(val => {
                     dispatch(RatnaActionFactory.updateRatnaCompleted(val, lifafaId, ratna.id))
                     
@@ -68,6 +86,13 @@ function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string
                     onClose();
                     toast.info('Login to get complete access');
                     return;
+                }
+                let openGraphDetails = null;
+                if(isValidUrl(data.ratnaContent)) {
+                    openGraphDetails = await openGraph({url: data.ratnaContent})
+                }
+                if (openGraphDetails) {
+                    ratna.openGraphInfo = openGraphDetails?.data.result
                 }
                 setLoading(true);
                 CreateRatna({
