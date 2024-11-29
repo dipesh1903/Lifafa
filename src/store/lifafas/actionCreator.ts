@@ -1,6 +1,6 @@
 import { Dispatch, Reducer, ReducerState } from "react"
-import { LifafaDoc, LifafaDocUpdate } from "../../types/firebaseDocument"
-import { createLifafa, fetchLifafa, getAllLifafa, updateLifafa } from "../../api/api"
+import { LifafaDocUpdate } from "../../types/firebaseDocument"
+import { fetchLifafa, getAllLifafa, updateLifafa } from "../../api/api"
 import { LifafaFE, SharedUserFE } from "../../types/documentFETypes"
 import { LifafaContextDataType } from "./context"
 import { UserAccessReduxAction } from "../UsersAccess/actionCreator"
@@ -45,18 +45,6 @@ export const LifafaActionFactory = {
                     if (result?.access.id)
                     dispatch(LifafaActionFactory.fetchSingleLifafaCompleted(result.lifafa, result.access));
                 }
-            } catch (error) {
-                dispatch(LifafaActionFactory.lifafaActionFailed());
-            }
-        }
-    },
-
-    createLifafa: (payload: LifafaDoc, uid: string) => {
-        return async function(dispatch: Dispatch<LifafaReduxAction>) {
-            try {
-                dispatch(LifafaActionFactory.lifafaActionStarted());
-                const result = await createLifafa(payload, uid);
-                dispatch(LifafaActionFactory.createLifafaCompleted(result));
             } catch (error) {
                 dispatch(LifafaActionFactory.lifafaActionFailed());
             }

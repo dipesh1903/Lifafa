@@ -1,5 +1,4 @@
 import { createContext, Dispatch, useContext, useReducer } from 'react';
-// import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { AuthInitialStateType, AuthReducer, initialState } from './reducer';
 import { AuthReduxAction } from './actionCreator';
 

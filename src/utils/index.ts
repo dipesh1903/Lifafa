@@ -3,6 +3,7 @@ import { twMerge } from 'tailwind-merge';
 import { LifafaDataType } from '../store/lifafas/context';
 import { LifafaAccessType } from '../constant';
 import { LifafaFE, RatnaFE, SharedUserFE } from '../types/documentFETypes';
+import { User } from 'firebase/auth';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -111,4 +112,8 @@ export function getYoutubeVideoId(url: string): string {
 
 export function createYoutubeImgUrl(videoId: string): string {
   return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+}
+
+export function isAnonymousUser(user: User): boolean {
+  return user.isAnonymous;
 }

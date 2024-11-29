@@ -1,7 +1,10 @@
-import { DocumentData } from "firebase/firestore"
+import { DocumentData, Timestamp } from "firebase/firestore"
 import { LifafaFE, RatnaFE, SharedUserFE } from "../types/documentFETypes"
 
 export function convertLifafaToFE(id: string, data: DocumentData): LifafaFE {
+    if (!!data.createdAt && !!data.createdAt['seconds']) {
+        data.createdAt = new Timestamp(data['seconds'], data['nanoseconds']);
+    }
     return (
         {
             name: data.name,
@@ -18,6 +21,9 @@ export function convertLifafaToFE(id: string, data: DocumentData): LifafaFE {
 }
 
 export function convertRatnaToFE(id: string, data: DocumentData): RatnaFE {
+    if (!!data.createdAt && !!data.createdAt['seconds']) {
+        data.createdAt = new Timestamp(data['seconds'], data['nanoseconds']);
+    }
     return (
         {
             name: data.name,

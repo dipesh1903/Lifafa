@@ -17,6 +17,7 @@ import { useConfig } from "../store/config/context";
 import { PrimaryButton } from "./ui/Button";
 import Error from "./ui/text-error";
 import { useAuth } from "../store/auth/context";
+import { User } from "firebase/auth";
 
 type formValues = {
     ratnaName: string,
@@ -58,7 +59,8 @@ function RatnaForm({ratna, lifafaId, onClose}: {ratna: RatnaFE, lifafaId: string
                     creatorName: user.user.displayName || '',
                     createdBy: user.user.uid,
                     createdAt: Timestamp.fromDate(new Date())
-                }, lifafaId).then(val => {
+                }, lifafaId, user.user as User).then(val => {
+                    if (!val) return;
                     dispatch(RatnaActionFactory.createActionCompleted(val, lifafaId))
                 }).catch()
                 .finally(() => onClose())

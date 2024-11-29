@@ -8,18 +8,20 @@ import { useRatna, useRatnaDispatch } from "../../store/ratnas/context";
 import { RatnaActionFactory } from "../../store/ratnas/actionCreator";
 import { PrimaryButton } from "../ui/Button";
 import { Textarea } from "../ui/textarea";
-import { cn, isValidUrl } from "../../utils";
+import { cn , isValidUrl } from "../../utils";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { OgObject } from "../../types/ogGraphTypes";
 import { RatnaDoc } from "../../types/firebaseDocument";
 import Spinner from "../../assets/svg/spinner.svg"
+import { User } from "firebase/auth";
 
 type props = {
     lifafaId: string,
+    isDisabled?: boolean,
     setRatna?: (ratna: RatnaFE) => void
 }
 
-export default function CreateRatnaInput({lifafaId}: props) {
+export default function CreateRatnaInput({lifafaId, isDisabled}: props) {
 
     const [value, setValue] = useState('');
     const [loading, setLoading] = useState<boolean>(false);
@@ -50,7 +52,8 @@ export default function CreateRatnaInput({lifafaId}: props) {
             if (openGraphDetails) {
                 ratna.openGraphInfo = openGraphDetails?.data.result
             }
-            const result = await CreateRatna(ratna, lifafaId)
+            const result = await CreateRatna(ratna, lifafaId, user.user as User)
+            if (!result) return;
             dispatch(RatnaActionFactory.createActionCompleted(result, lifafaId));
         } catch {
         } finally {
@@ -66,9 +69,13 @@ export default function CreateRatnaInput({lifafaId}: props) {
                 'ring-4': animateInput && !value,
             })}>
                 <Textarea autoFocus
+                    disabled={isDisabled}
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
-                    className="m-0 focus:ring-0 rounded-lg focus:border-none outline-none focus:ring-inset light-secondaryappearance-none focus:outline-none w-full h-30 p-4 resize-none bg-white font-semibold text-[16px]" placeholder="Add your ratna">
+                    className={cn(`m-0 focus:ring-0 rounded-lg focus:border-none outline-none focus:ringinset
+                        light-secondaryappearance-none focus:outline-none w-full h-30 p-4 resize-none bg-white font-semibold text-[16px]`, 
+                        {"pointer-events-none": isDisabled, "opacity-50": isDisabled})}
+                    placeholder="Add your ratna">
                 </Textarea>
             </div>
             <Flex justify="end" align="center"> 

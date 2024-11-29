@@ -11,6 +11,7 @@ import { PrimaryButton } from "../ui/Button";
 import { Input } from "../ui/input";
 import Label from "../ui/Label";
 import Error from "../ui/text-error";
+import Spinner from "../../assets/svg/spinner.svg";
 
 
 type formValues = {
@@ -22,15 +23,22 @@ export default function Form({onClose}: {onClose: (navigateBack: boolean) => voi
     const navigate = useNavigate();
     const location = useLocation();
     const { lifafaId }= useParams();
+    const [loading, setLoading] = useState<boolean>(false)
+    const user = useAuth();
     const [access , setAccess] = useState(LifafaAccessType.PRIVATE)
-    const radioItems = Object.keys(LifafaAccessType).map(value => ({label: value, value}));
+    const radioItems = Object.keys(LifafaAccessType).map(value => {
+        if (user.isAnonymousUser) {
+            return {label: value, value, isDisabled: value !== LifafaAccessType.PRIVATE}
+        } else {
+            return {label: value, value};
+        } 
+    })
     const { register, handleSubmit, formState: { errors }, setValue } = useForm<formValues>({
         defaultValues: {
             lifafaName: location.state?.lifafaName || '',
             protectedPassword: location.state?.protectedPassword || ''
         }
     });
-    const user = useAuth();
 
     const onSubmit: SubmitHandler<formValues> = (data: FieldValues) => {
         if (lifafaId) {
@@ -53,6 +61,7 @@ export default function Form({onClose}: {onClose: (navigateBack: boolean) => voi
 
     async function onCreate(name: string, password?: string) {
         try {
+            setLoading(true)
             const lifafa = await createLifafa({
                 name,
                 sharedUserId: [],
@@ -61,19 +70,21 @@ export default function Form({onClose}: {onClose: (navigateBack: boolean) => voi
                 description: "",
                 createdBy: user.user.uid,
                 createdAt: Timestamp.fromDate(new Date())
-            }, user.user.uid, password)
+            }, user.user.uid, user.isAnonymousUser, password)
             navigate(`/lifafa/${lifafa.id}`, {
                 replace: true
             })
         } catch (err) {
             navigate('..');
         } finally {
+            setLoading(false);
             onClose(false);
         }
     }
 
     async function onUpdate(name: string, password?: string) {
         try {
+            setLoading(true)
             const lifafa = await updateLifafa({
                 name,
                 sharedUserId: [],
@@ -88,6 +99,7 @@ export default function Form({onClose}: {onClose: (navigateBack: boolean) => voi
         } catch (err) {
             navigate('..');
         } finally {
+            setLoading(false)
             onClose(true)
         }
     }
@@ -113,7 +125,9 @@ export default function Form({onClose}: {onClose: (navigateBack: boolean) => voi
                             {errors?.lifafaName?.message}
                         </Error>
                     </div>
-                    <AccessRadioGroup radioItems={radioItems} defaultValue={location.state?.accessType || LifafaAccessType.PRIVATE} onValueChange={(val) => {setAccess(val as LifafaAccessType)}} className="py-4"/>
+                    <AccessRadioGroup radioItems={radioItems}
+                    defaultValue={location.state?.accessType || LifafaAccessType.PRIVATE} onValueChange={(val) => {setAccess(val as LifafaAccessType)}} className="py-4"/>
+                    {user.isAnonymousUser && <div className="italics opacity-25  pb-4">** Login to enable all features **</div>}
                     {
                     access === LifafaAccessType.PROTECTED ?
                     <div>
@@ -134,7 +148,9 @@ export default function Form({onClose}: {onClose: (navigateBack: boolean) => voi
                     </div> : null
                     }
                     <Flex justify="end">
-                        <PrimaryButton type="submit">Create</PrimaryButton>
+                        <PrimaryButton type="submit"
+                        className={loading ?  "pointer-events-none bg-opacity-60" : ""}
+                        >{loading && <img src={Spinner} />}<span className="pl-1">Create</span></PrimaryButton>
                     </Flex>
                 </Box>
             </form>

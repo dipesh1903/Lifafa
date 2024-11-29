@@ -1,19 +1,51 @@
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase.config";
 import { COLLECTIONS } from "../config/firebaseCollection";
-import { RatnaDoc, RatnaDocUpdate, SharedUserDoc } from "../types/firebaseDocument";
+import { LifafaDoc, RatnaDoc, RatnaDocUpdate, SharedUserDoc } from "../types/firebaseDocument";
 import { RatnaFE, SharedUserFE } from "../types/documentFETypes";
 import { convertRatnaToFE } from "../utils/firebaseToFEConverter";
 import { ApiStatus } from "../constant";
 import { handleError } from "../utils/handleError";
 import { toast } from "react-toastify";
+import { getFunctions, httpsCallable } from "firebase/functions";
+import { User } from "firebase/auth";
 
-export async function CreateRatna(ratna: RatnaDoc, lifafaId: string): Promise<RatnaFE> {
+export async function CreateRatna(ratna: RatnaDoc, lifafaId: string, user: User): Promise<RatnaFE | void> {
     try {
-        const ref = collection(db, COLLECTIONS.LIFAFA.index, lifafaId, COLLECTIONS.LIFAFA.ratna)
-        const addRef = await addDoc(ref, ratna);
-        toast.success('Created Successfully !!')
-        return Promise.resolve(convertRatnaToFE(addRef.id, ratna));
+        let ratnaId = '';
+        let isRatnaCreated = false;
+        if (user.isAnonymous) {
+            const functions = getFunctions();
+            const createAnonymousRatnaLifafa = httpsCallable<{ratna: RatnaDoc, lifafaId: string, uid: string}, {error: any, ratnaId?: string,
+                ratnaCount?: number, isSuccess: boolean
+            }
+                >(functions, "createAnonymousRatnaLifafa")
+
+            const result = await createAnonymousRatnaLifafa({
+                ratna: ratna,
+                lifafaId,
+                uid: user.uid
+            })
+            const {
+                isSuccess,
+            } = result.data;
+            if (result.data.ratnaId) {
+                ratnaId = result.data.ratnaId
+            }
+            isRatnaCreated = !!(isSuccess && !result.data.ratnaCount);
+        } else {
+            const ref = collection(db, COLLECTIONS.LIFAFA.index, lifafaId, COLLECTIONS.LIFAFA.ratna)
+            const addRef = await addDoc(ref, ratna);
+            isRatnaCreated = true
+            ratnaId = addRef.id
+        }
+        if (isRatnaCreated) {
+            toast.success('Created Successfully !!')
+            return Promise.resolve(convertRatnaToFE(ratnaId, ratna));
+        } else {
+            toast.info('Login to get complete access')
+            return Promise.resolve();
+        }
     } catch(error) {
         toast.error('Failed!!')
         return Promise.reject(handleError(error))

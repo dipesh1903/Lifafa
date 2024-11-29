@@ -11,7 +11,8 @@ export const AuthActionFactory = {
         type: AuthActions.LOGIN,
         payload: {
             user,
-            isFirebaseAuthenticated
+            isFirebaseAuthenticated,
+            isAnonymousUser: user.isAnonymous
         }
     }),
 
@@ -19,7 +20,8 @@ export const AuthActionFactory = {
         type: AuthActions.LOGOUT,
         payload: {
             user: null,
-            isFirebaseAuthenticated: false
+            isFirebaseAuthenticated: false,
+            isAnonymousUser: false
         }
     }),
 

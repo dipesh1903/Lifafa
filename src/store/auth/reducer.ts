@@ -5,12 +5,14 @@ import storePersist, { LOCAL_STORAGE_KEY } from "../storePersist";
 
 export type AuthInitialStateType = {
     user: User | Record<PropertyKey, never>;
-    isFirebaseAuthenticated: boolean
+    isFirebaseAuthenticated: boolean,
+    isAnonymousUser: boolean
 } | Record<PropertyKey, never>;
 
 export const initialState: AuthInitialStateType = storePersist.get(LOCAL_STORAGE_KEY.LOGIN_DETAILS) || {
     user: {},
-    isFirebaseAuthenticated: false
+    isFirebaseAuthenticated: false,
+    isAnonymousUser: false 
 };
 
 export function AuthReducer(initState: AuthInitialStateType, action: AuthReduxAction): AuthInitialStateType {

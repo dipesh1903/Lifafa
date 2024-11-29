@@ -9,6 +9,8 @@ import { convertLifafaToFE, convertSharedUserToFE } from "../utils/firebaseToFEC
 import { getCurrentUserLifafaAccess } from "./ratna";
 import { LifafaAccessType } from "../constant";
 import { toast } from "react-toastify";
+import { getFunctions, httpsCallable } from "firebase/functions";
+import { OgObject } from "../types/ogGraphTypes";
 
 export async function fetchLifafa(lifafaId: string, uid: string): Promise<{lifafa: LifafaFE, access: SharedUserFE} | null> {
     let lifafa = null;
@@ -86,26 +88,44 @@ export async function updateLifafa(lifafa: LifafaDocUpdate, lifafaId: string, ui
     }
 }
 
-export async function createLifafa(lifafa: LifafaDoc, uid: string, password?: string): Promise<LifafaFE> {
+export async function createLifafa(lifafa: LifafaDoc, uid: string, isAnonymousUser: boolean, password?: string): Promise<LifafaFE> {
     try {
-        const batch = writeBatch(db);
         const lifafaId = new IdGenerator().generate();
-        const addRef = doc(db, COLLECTIONS.LIFAFA.index, lifafaId);
-        
-        batch.set(addRef, {
-            ...lifafa
-        } as LifafaDoc);
-        if (lifafa.accessType === LifafaAccessType.PROTECTED) {
-            if (!password) throw new Error();
-            const addPrivate = doc(db, COLLECTIONS.LIFAFA.index, lifafaId, COLLECTIONS.LIFAFA.private, uid);
-            batch.set(
-                addPrivate, {
-                    password
-                }
-            )
+        let isLifafaCreated = false
+        if (isAnonymousUser) {
+            const functions = getFunctions();
+            const createAnonymousLifafa = httpsCallable<{uid: string, lifafaDoc: LifafaDoc, lifafaId: string},
+            {isSuccess: boolean, error?: any, result? : any, lifafaCount?: number}
+                >(functions, "createAnonymousLifafa")
+            const result = await createAnonymousLifafa({
+                uid,
+                lifafaDoc: lifafa,
+                lifafaId
+            })
+            isLifafaCreated = !!(result.data.isSuccess && !result.data.lifafaCount)
+            if (result.data.isSuccess && result.data.lifafaCount) {
+                toast.info('Login to get complete access')
+            }
+        } else {
+            const batch = writeBatch(db);
+            const addRef = doc(db, COLLECTIONS.LIFAFA.index, lifafaId);
+            batch.set(addRef, {
+                ...lifafa
+            } as LifafaDoc);
+            if (lifafa.accessType === LifafaAccessType.PROTECTED) {
+                if (!password) throw new Error();
+                const addPrivate = doc(db, COLLECTIONS.LIFAFA.index, lifafaId, COLLECTIONS.LIFAFA.private, uid);
+                batch.set(
+                    addPrivate, {
+                        password
+                    }
+                )
+            }
+            await batch.commit();
         }
-        await batch.commit();
-        toast.success('Created Successfully!!')
+        if (isLifafaCreated) {
+            toast.success('Created Successfully!!')
+        }
         return Promise.resolve(convertLifafaToFE(lifafaId, lifafa));
     } catch(error) {
         toast.error('Failed!!')
