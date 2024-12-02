@@ -17,12 +17,11 @@ export default function LifafaHomeContent() {
     const lifafas = useLifafa();
     const location = useLocation();
     const dispatch = useLifafaDispatch();
-
     
     const result = Object.values(lifafas.data || {});
     useEffect(() => {
         dispatch(LifafaActionFactory.fetchAllLifafa(user.user.uid, !!location.pathname));
-    },[user.user.uid, location.pathname])
+    },[user.user.uid])
 
     return (
         <>
