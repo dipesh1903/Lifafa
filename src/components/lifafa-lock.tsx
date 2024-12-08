@@ -21,21 +21,21 @@ type props = {
     onSuccess: () => void
 }
 
-export default function LifafaLocked({lifafa}: props) {
+export default function LifafaLocked({lifafa, onSuccess}: props) {
     const user = useAuth();
     const dispatch = useLifafaDispatch();
     const {register, handleSubmit, formState: { errors }} = useForm<formValues>();
 
     const onSubmit: SubmitHandler<formValues> = (data: FieldValues) => { 
-        
         addUser(user.user.uid, lifafa.id, {
             accessType: LifafaAccessType.PROTECTED,
-            name: user.user.displayName,
+            name: user.user.displayName || '',
             joinedAt: Timestamp.fromDate(new Date()),
             password: data.lifafaPassword
-        }).then(val => 
+        }).then(val => {
             dispatch(LifafaActionFactory.fetchSingleLifafaCompleted(lifafa, val))
-        )
+            onSuccess();
+        })
         .catch()
     }
     return (

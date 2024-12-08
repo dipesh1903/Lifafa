@@ -3,6 +3,7 @@ import { LifafaFE } from "../../types/documentFETypes";
 import { isLifafaOwner } from "../../utils";
 import { useAuth } from "../../store/auth/context";
 import { PrimaryButton } from "../ui/Button";
+import { LifafaAccessType } from "../../constant";
 
 type props = {
     lifafa: LifafaFE
@@ -15,10 +16,10 @@ export default function LifafaCardActions({lifafa}: props) {
     }
     return (
         <div className="flex flex-nowrap overflow-auto overflow-y-scroll scrollbar-w py-4">
-            <PrimaryButton 
+            {lifafa.accessType !== LifafaAccessType.PRIVATE && <PrimaryButton
             variant="outline"
             className="w-fit mr-2 bg-light-primary text-light-onPrimary border-light-outline hover:bg-opacity-80"
-            onClick={(e) => {e.stopPropagation(); copyToClipboard()}}>Copy Invite Link</PrimaryButton>
+            onClick={(e) => {e.stopPropagation(); copyToClipboard()}}>Copy Invite Link</PrimaryButton>}
             {!!isLifafaOwner(lifafa, user.user.uid) &&
             <PrimaryButton variant="outline"
             className="w-fit bg-light-primary border-light-outline text-light-onPrimary hover:bg-opacity-80"
